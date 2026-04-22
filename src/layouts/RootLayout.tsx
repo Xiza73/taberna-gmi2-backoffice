@@ -1,15 +1,26 @@
-import { Outlet } from '@tanstack/react-router';
+import { useEffect } from 'react';
+import { Outlet, useNavigate, useRouterState } from '@tanstack/react-router';
 import { Toaster } from 'sonner';
-import { Sidebar } from '@/components/Sidebar';
+import { onAuthExpired } from '@/api/tokens';
 
 export function RootLayout() {
+  const navigate = useNavigate();
+  const routerState = useRouterState();
+
+  useEffect(() => {
+    return onAuthExpired(() => {
+      const currentHref = routerState.location.href;
+      void navigate({
+        to: '/login',
+        search: { redirect: currentHref },
+      });
+    });
+  }, [navigate, routerState.location.href]);
+
   return (
-    <div className="flex h-screen overflow-hidden bg-background text-foreground">
-      <Sidebar />
-      <main className="flex-1 flex flex-col overflow-hidden">
-        <Outlet />
-      </main>
+    <>
+      <Outlet />
       <Toaster position="top-right" theme="dark" />
-    </div>
+    </>
   );
 }
