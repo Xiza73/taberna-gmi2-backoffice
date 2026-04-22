@@ -63,12 +63,22 @@ async function attempt(
 ): Promise<Response> {
   const headers: Record<string, string> = {};
   if (token) headers.Authorization = `Bearer ${token}`;
-  if (opts.body !== undefined) headers['Content-Type'] = 'application/json';
+
+  let body: BodyInit | undefined;
+  if (opts.body !== undefined) {
+    if (opts.body instanceof FormData) {
+      body = opts.body;
+      // No Content-Type — fetch sets multipart/form-data with boundary automatically
+    } else {
+      body = JSON.stringify(opts.body);
+      headers['Content-Type'] = 'application/json';
+    }
+  }
 
   return fetch(url, {
     method,
     headers,
-    body: opts.body !== undefined ? JSON.stringify(opts.body) : undefined,
+    body,
     signal: opts.signal,
     credentials: 'omit',
   });
