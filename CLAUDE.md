@@ -33,10 +33,15 @@ backend existente que ya implementa autenticación y expone una API REST.
 | Testing E2E     | Playwright                          |
 | Linter          | ESLint (flat config)                |
 | Formatter       | Prettier                            |
-| Estilos         | (por definir — Tailwind / CSS Modules / Styled) |
-| State management| React 19 cache + context (evaluar Zustand si crece) |
-| HTTP client     | fetch nativo / Axios (por confirmar)|
-| Router          | React Router v7                     |
+| Estilos         | Tailwind CSS 4 + shadcn/ui (Radix primitives) |
+| Animaciones     | Motion (framer-motion)              |
+| State management| TanStack Query (server state) + React context (UI state) |
+| HTTP client     | fetch nativo (via TanStack Query)   |
+| Router          | TanStack Router                     |
+| Formularios     | React Hook Form                     |
+| Charts          | Recharts                            |
+| Iconos          | Lucide React                        |
+| Notificaciones  | Sonner (toasts)                     |
 
 ## Comandos clave
 
@@ -115,7 +120,7 @@ backoffice-frontend/
 │   ├── hooks/               # Hooks globales reutilizables
 │   ├── layouts/             # Layouts de página (Sidebar, Header…)
 │   ├── pages/               # Componentes de ruta (1 por ruta)
-│   ├── router/              # Configuración de React Router
+│   ├── router/              # Configuración de TanStack Router
 │   ├── store/               # Estado global (context / zustand)
 │   ├── styles/              # Estilos globales, tokens, theme
 │   ├── types/               # Tipos compartidos / DTO del backend
