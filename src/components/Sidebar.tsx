@@ -4,20 +4,13 @@ import {
   Users,
   Package,
   ShoppingCart,
-  BarChart3,
   Settings,
   Menu,
   X,
   LayoutDashboard,
-  Tag,
   FolderTree,
   Truck,
-  CreditCard,
-  PercentCircle,
   MessageSquare,
-  Bell,
-  FileText,
-  Store,
   UserCog,
   LogOut,
   type LucideIcon,
@@ -52,38 +45,26 @@ const menuSections: MenuSection[] = [
     items: [
       { id: 'products', label: 'Productos', icon: Package, path: '/products' },
       { id: 'categories', label: 'Categorías', icon: FolderTree, path: '/categories' },
-      { id: 'brands', label: 'Marcas', icon: Tag, path: '/brands' },
     ],
   },
   {
     title: 'Ventas',
     items: [
       { id: 'orders', label: 'Pedidos', icon: ShoppingCart, path: '/orders' },
-      { id: 'payments', label: 'Pagos', icon: CreditCard, path: '/payments' },
       { id: 'shipping', label: 'Envíos', icon: Truck, path: '/shipping' },
-      { id: 'promotions', label: 'Promociones', icon: PercentCircle, path: '/promotions' },
     ],
   },
   {
     title: 'Gestión',
     items: [
-      { id: 'users', label: 'Usuarios', icon: Users, path: '/users' },
+      { id: 'users', label: 'Staff', icon: Users, path: '/users' },
       { id: 'customers', label: 'Clientes', icon: UserCog, path: '/customers' },
-      { id: 'stores', label: 'Tiendas', icon: Store, path: '/stores' },
     ],
   },
   {
     title: 'Comunicación',
     items: [
       { id: 'reviews', label: 'Reseñas', icon: MessageSquare, path: '/reviews' },
-      { id: 'notifications', label: 'Notificaciones', icon: Bell, path: '/notifications' },
-    ],
-  },
-  {
-    title: 'Reportes',
-    items: [
-      { id: 'analytics', label: 'Analíticas', icon: BarChart3, path: '/analytics' },
-      { id: 'reports', label: 'Reportes', icon: FileText, path: '/reports' },
     ],
   },
   {
