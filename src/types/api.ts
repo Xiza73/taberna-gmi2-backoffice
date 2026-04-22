@@ -7,7 +7,7 @@ export interface Paginated<T> {
   total: number;
   page: number;
   limit: number;
-  pages: number;
+  totalPages: number;
 }
 
 export type ApiErrorCode =

@@ -14,8 +14,10 @@ if (!BASE_URL) {
   throw new Error('VITE_API_BASE_URL is not defined. Copy .env.example to .env.');
 }
 
+type QueryValue = string | number | boolean | undefined | null;
+
 interface RequestOptions {
-  query?: Record<string, string | number | boolean | undefined | null>;
+  query?: Record<string, QueryValue> | object;
   body?: unknown;
   skipAuth?: boolean;
   skipRefresh?: boolean;
@@ -141,7 +143,7 @@ function buildUrl(path: string, query?: RequestOptions['query']): string {
   const params = new URLSearchParams();
   for (const [key, value] of Object.entries(query)) {
     if (value === undefined || value === null) continue;
-    params.append(key, String(value));
+    params.append(key, String(value as QueryValue));
   }
   const qs = params.toString();
   return qs ? `${url}?${qs}` : url;
