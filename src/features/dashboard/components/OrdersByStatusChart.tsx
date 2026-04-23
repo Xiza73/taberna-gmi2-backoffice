@@ -12,7 +12,7 @@ import {
   ORDER_STATUSES,
   orderStatusChartColor,
   orderStatusLabels,
-} from '../lib/orderStatus';
+} from '@/features/orders/lib/orderStatus';
 
 interface Props {
   data: OrdersByStatus;

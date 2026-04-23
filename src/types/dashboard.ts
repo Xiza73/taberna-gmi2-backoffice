@@ -1,11 +1,6 @@
-export type OrderStatus =
-  | 'pending'
-  | 'paid'
-  | 'processing'
-  | 'shipped'
-  | 'delivered'
-  | 'cancelled'
-  | 'refunded';
+import type { OrderStatus } from './orders';
+
+export type { OrderStatus };
 
 export interface OrdersByStatus {
   pending: number;
