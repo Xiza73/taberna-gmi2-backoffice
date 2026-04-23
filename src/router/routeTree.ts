@@ -25,6 +25,7 @@ import { ReportsPage } from '@/pages/ReportsPage';
 import { SettingsPage } from '@/pages/SettingsPage';
 import { ProductNewPage } from '@/pages/ProductNewPage';
 import { ProductEditPage } from '@/pages/ProductEditPage';
+import { OrderDetailPage } from '@/pages/OrderDetailPage';
 import { LoginPage } from '@/pages/LoginPage';
 import { authKeys } from '@/features/auth';
 import { staffAuthApi } from '@/api/staffAuthApi';
@@ -98,6 +99,12 @@ const ordersRoute = createRoute({
   getParentRoute: () => authedLayoutRoute,
   path: '/orders',
   component: OrdersPage,
+});
+
+const orderDetailRoute = createRoute({
+  getParentRoute: () => authedLayoutRoute,
+  path: '/orders/$orderId',
+  component: OrderDetailPage,
 });
 
 const paymentsRoute = createRoute({
@@ -195,6 +202,7 @@ export const routeTree = rootRoute.addChildren([
     categoriesRoute,
     brandsRoute,
     ordersRoute,
+    orderDetailRoute,
     paymentsRoute,
     shippingRoute,
     promotionsRoute,
