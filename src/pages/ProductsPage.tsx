@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Plus } from 'lucide-react';
+import { useNavigate } from '@tanstack/react-router';
 import { toast } from 'sonner';
 import { ApiError } from '@/api/errors';
 import { Button } from '@/components/ui/Button';
@@ -19,6 +20,7 @@ const PAGE_SIZE = 20;
 const DEFAULT_SORT: ProductSortBy = 'newest';
 
 export function ProductsPage() {
+  const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [searchInput, setSearchInput] = useState('');
   const [categoryId, setCategoryId] = useState('');
@@ -70,8 +72,12 @@ export function ProductsPage() {
     setPage(1);
   };
 
-  const handleEdit = (_product: Product) => {
-    toast.info('Edición disponible en el próximo PR');
+  const handleEdit = (product: Product) => {
+    void navigate({ to: '/products/$productId/edit', params: { productId: product.id } });
+  };
+
+  const handleNew = () => {
+    void navigate({ to: '/products/new' });
   };
 
   const confirmDelete = async () => {
@@ -101,7 +107,7 @@ export function ProductsPage() {
               Catálogo de productos de la tienda.
             </p>
           </div>
-          <Button onClick={() => toast.info('Creación disponible en el próximo PR')}>
+          <Button onClick={handleNew}>
             <Plus size={16} />
             <span>Nuevo producto</span>
           </Button>

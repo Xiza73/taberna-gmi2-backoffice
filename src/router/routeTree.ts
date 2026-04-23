@@ -23,6 +23,8 @@ import { NotificationsPage } from '@/pages/NotificationsPage';
 import { AnalyticsPage } from '@/pages/AnalyticsPage';
 import { ReportsPage } from '@/pages/ReportsPage';
 import { SettingsPage } from '@/pages/SettingsPage';
+import { ProductNewPage } from '@/pages/ProductNewPage';
+import { ProductEditPage } from '@/pages/ProductEditPage';
 import { LoginPage } from '@/pages/LoginPage';
 import { authKeys } from '@/features/auth';
 import { staffAuthApi } from '@/api/staffAuthApi';
@@ -66,6 +68,18 @@ const productsRoute = createRoute({
   getParentRoute: () => authedLayoutRoute,
   path: '/products',
   component: ProductsPage,
+});
+
+const productNewRoute = createRoute({
+  getParentRoute: () => authedLayoutRoute,
+  path: '/products/new',
+  component: ProductNewPage,
+});
+
+const productEditRoute = createRoute({
+  getParentRoute: () => authedLayoutRoute,
+  path: '/products/$productId/edit',
+  component: ProductEditPage,
 });
 
 const categoriesRoute = createRoute({
@@ -176,6 +190,8 @@ export const routeTree = rootRoute.addChildren([
   authedLayoutRoute.addChildren([
     dashboardRoute,
     productsRoute,
+    productNewRoute,
+    productEditRoute,
     categoriesRoute,
     brandsRoute,
     ordersRoute,
