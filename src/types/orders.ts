@@ -74,3 +74,11 @@ export interface OrderListQuery {
   search?: string;
   sortBy?: string;
 }
+
+export interface UpdateOrderStatusInput {
+  status: OrderStatus;
+}
+
+export interface UpdateOrderNotesInput {
+  adminNotes: string;
+}

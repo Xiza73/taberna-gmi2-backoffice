@@ -1,10 +1,13 @@
 import { ArrowLeft } from 'lucide-react';
 import { useNavigate, useParams } from '@tanstack/react-router';
 import {
+  OrderAdminNotesEditor,
   OrderCustomerCard,
   OrderEventsTimeline,
   OrderItemsList,
   OrderNotesCard,
+  OrderShipmentCard,
+  OrderStatusActions,
   OrderStatusBadge,
   OrderTotalsCard,
   useOrder,
@@ -50,6 +53,14 @@ export function OrderDetailPage() {
                 Creado el {formatDateTime(orderQuery.data.createdAt)}
               </p>
             )}
+            {orderQuery.data && orderId && (
+              <div className="mt-3">
+                <OrderStatusActions
+                  orderId={orderId}
+                  currentStatus={orderQuery.data.status}
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -66,15 +77,23 @@ export function OrderDetailPage() {
                 : 'Error desconocido'}
             </p>
           </div>
-        ) : orderQuery.data ? (
+        ) : orderQuery.data && orderId ? (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             <div className="lg:col-span-2 space-y-4">
               <OrderItemsList items={orderQuery.data.items ?? []} />
               <OrderEventsTimeline events={orderQuery.data.events ?? []} />
+              <OrderAdminNotesEditor
+                orderId={orderId}
+                initialAdminNotes={orderQuery.data.adminNotes}
+              />
             </div>
             <aside className="space-y-4">
               <OrderTotalsCard order={orderQuery.data} />
               <OrderCustomerCard order={orderQuery.data} />
+              <OrderShipmentCard
+                orderId={orderId}
+                orderStatus={orderQuery.data.status}
+              />
               <OrderNotesCard order={orderQuery.data} />
             </aside>
           </div>
@@ -90,10 +109,12 @@ function OrderDetailSkeleton() {
       <div className="lg:col-span-2 space-y-4">
         <div className="h-64 rounded-lg border border-border bg-card/50" />
         <div className="h-48 rounded-lg border border-border bg-card/50" />
+        <div className="h-32 rounded-lg border border-border bg-card/50" />
       </div>
       <aside className="space-y-4">
         <div className="h-40 rounded-lg border border-border bg-card/50" />
         <div className="h-40 rounded-lg border border-border bg-card/50" />
+        <div className="h-32 rounded-lg border border-border bg-card/50" />
       </aside>
     </div>
   );
