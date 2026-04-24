@@ -26,6 +26,7 @@ import { SettingsPage } from '@/pages/SettingsPage';
 import { ProductNewPage } from '@/pages/ProductNewPage';
 import { ProductEditPage } from '@/pages/ProductEditPage';
 import { OrderDetailPage } from '@/pages/OrderDetailPage';
+import { CustomerDetailPage } from '@/pages/CustomerDetailPage';
 import { LoginPage } from '@/pages/LoginPage';
 import { RegisterStaffPage } from '@/pages/RegisterStaffPage';
 import { authKeys } from '@/features/auth';
@@ -138,6 +139,12 @@ const customersRoute = createRoute({
   component: CustomersPage,
 });
 
+const customerDetailRoute = createRoute({
+  getParentRoute: () => authedLayoutRoute,
+  path: '/customers/$customerId',
+  component: CustomerDetailPage,
+});
+
 const storesRoute = createRoute({
   getParentRoute: () => authedLayoutRoute,
   path: '/stores',
@@ -221,6 +228,7 @@ export const routeTree = rootRoute.addChildren([
     promotionsRoute,
     usersRoute,
     customersRoute,
+    customerDetailRoute,
     storesRoute,
     reviewsRoute,
     notificationsRoute,
