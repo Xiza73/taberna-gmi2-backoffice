@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 import { useAuth } from '@/features/auth';
+import { roleLabels } from '@/features/staff/lib/role';
 
 function getInitials(name: string): string {
   const parts = name.trim().split(/\s+/).slice(0, 2);
@@ -72,12 +73,6 @@ const menuSections: MenuSection[] = [
     items: [{ id: 'settings', label: 'Configuración', icon: Settings, path: '/settings' }],
   },
 ];
-
-const roleLabels: Record<'super_admin' | 'admin' | 'user', string> = {
-  super_admin: 'Super Admin',
-  admin: 'Admin',
-  user: 'Operador',
-};
 
 export function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
