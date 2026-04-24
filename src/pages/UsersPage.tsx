@@ -1,11 +1,15 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
+import { Mail } from 'lucide-react';
 import { toast } from 'sonner';
 import { ApiError } from '@/api/errors';
+import { Button } from '@/components/ui/Button';
 import { ConfirmDialog } from '@/components/ConfirmDialog';
 import { Pagination } from '@/components/ui/Pagination';
 import { useAuth } from '@/features/auth';
 import {
   ChangeRoleModal,
+  InviteStaffModal,
+  PendingInvitationsSection,
   StaffEditModal,
   StaffFilters,
   StaffTable,
@@ -30,6 +34,7 @@ export function UsersPage() {
   const [editing, setEditing] = useState<Staff | undefined>();
   const [changingRole, setChangingRole] = useState<Staff | undefined>();
   const [togglingActive, setTogglingActive] = useState<Staff | undefined>();
+  const [inviteOpen, setInviteOpen] = useState(false);
 
   const debouncedSearch = useDebounce(searchInput, 300);
 
@@ -43,6 +48,19 @@ export function UsersPage() {
     role: role === '' ? undefined : role,
     isActive: isActiveFilter,
   });
+
+  // Best-effort lookup for displaying inviter names in PendingInvitationsSection.
+  // If an invitation was sent by someone outside the current page's slice,
+  // it falls back to "otro miembro".
+  const allStaffQuery = useStaffList({ page: 1, limit: 100 });
+
+  const inviterLookup = useMemo(() => {
+    const map = new Map<string, string>();
+    for (const member of allStaffQuery.data?.items ?? []) {
+      map.set(member.id, member.id === me?.id ? 'Vos' : member.name);
+    }
+    return map;
+  }, [allStaffQuery.data, me?.id]);
 
   const suspendMutation = useSuspendStaff();
   const activateMutation = useActivateStaff();
@@ -79,20 +97,33 @@ export function UsersPage() {
   };
 
   const canChangeRole = me?.role === 'super_admin';
+  const canInvite = me?.role === 'super_admin' || me?.role === 'admin';
   const data = listQuery.data;
 
   return (
     <div className="flex-1 overflow-auto">
       <div className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-30">
-        <div className="p-4 pl-16 lg:pl-6 lg:p-6">
-          <h2 className="text-2xl lg:text-3xl mb-1">Staff</h2>
-          <p className="text-sm text-muted-foreground">
-            Personal del backoffice. Invitaciones disponibles en el próximo PR.
-          </p>
+        <div className="p-4 pl-16 lg:pl-6 lg:p-6 flex items-start justify-between gap-4 flex-wrap">
+          <div>
+            <h2 className="text-2xl lg:text-3xl mb-1">Staff</h2>
+            <p className="text-sm text-muted-foreground">
+              Personal del backoffice. Invitaciones por email con expiración 72h.
+            </p>
+          </div>
+          {canInvite && (
+            <Button onClick={() => setInviteOpen(true)}>
+              <Mail size={16} />
+              <span>Invitar staff</span>
+            </Button>
+          )}
         </div>
       </div>
 
       <div className="p-4 lg:p-6 space-y-4">
+        {canInvite && (
+          <PendingInvitationsSection inviterLookup={inviterLookup} />
+        )}
+
         <div className="bg-card border border-border rounded-lg p-4">
           <StaffFilters
             searchInput={searchInput}
@@ -141,6 +172,14 @@ export function UsersPage() {
           ) : null}
         </div>
       </div>
+
+      {me && canInvite && (
+        <InviteStaffModal
+          isOpen={inviteOpen}
+          onClose={() => setInviteOpen(false)}
+          currentUserRole={me.role}
+        />
+      )}
 
       <StaffEditModal
         isOpen={Boolean(editing)}

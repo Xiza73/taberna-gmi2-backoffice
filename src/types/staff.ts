@@ -25,3 +25,33 @@ export interface UpdateStaffInput {
 export interface ChangeStaffRoleInput {
   role: StaffRole;
 }
+
+export interface StaffInvitation {
+  id: string;
+  email: string;
+  role: StaffRole;
+  invitedBy: string;
+  expiresAt: string;
+  createdAt: string;
+}
+
+export interface StaffInvitationListQuery {
+  page?: number;
+  limit?: number;
+}
+
+export interface InviteStaffInput {
+  email: string;
+  role: StaffRole;
+}
+
+export interface ValidateInvitationResponse {
+  email: string;
+  role: StaffRole;
+  invitedByName: string;
+}
+
+export interface AcceptInvitationInput {
+  name: string;
+  password: string;
+}
