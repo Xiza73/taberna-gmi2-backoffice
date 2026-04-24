@@ -1,7 +1,28 @@
+const ACCESS_STORAGE_KEY = 'gmi2.backoffice.accessToken';
 const REFRESH_STORAGE_KEY = 'gmi2.backoffice.refreshToken';
 const AUTH_EXPIRED_EVENT = 'gmi2:auth-expired';
 
-let accessTokenInMemory: string | null = null;
+function readFromStorage(key: string): string | null {
+  try {
+    return localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+}
+
+function writeToStorage(key: string, value: string | null): void {
+  try {
+    if (value === null) localStorage.removeItem(key);
+    else localStorage.setItem(key, value);
+  } catch {
+    // storage unavailable (private mode, quota) — silently ignore
+  }
+}
+
+// Initialize access token in memory from storage so it survives page reloads
+// without forcing a 401-then-refresh round-trip on every visit. Refresh queue
+// in client.ts still kicks in when the token actually expires.
+let accessTokenInMemory: string | null = readFromStorage(ACCESS_STORAGE_KEY);
 
 export function getAccessToken(): string | null {
   return accessTokenInMemory;
@@ -9,23 +30,15 @@ export function getAccessToken(): string | null {
 
 export function setAccessToken(token: string | null): void {
   accessTokenInMemory = token;
+  writeToStorage(ACCESS_STORAGE_KEY, token);
 }
 
 export function getRefreshToken(): string | null {
-  try {
-    return localStorage.getItem(REFRESH_STORAGE_KEY);
-  } catch {
-    return null;
-  }
+  return readFromStorage(REFRESH_STORAGE_KEY);
 }
 
 export function setRefreshToken(token: string | null): void {
-  try {
-    if (token === null) localStorage.removeItem(REFRESH_STORAGE_KEY);
-    else localStorage.setItem(REFRESH_STORAGE_KEY, token);
-  } catch {
-    // storage unavailable (private mode, quota) — silently ignore; session becomes tab-scoped
-  }
+  writeToStorage(REFRESH_STORAGE_KEY, token);
 }
 
 export function setTokens(tokens: { accessToken: string; refreshToken: string }): void {
