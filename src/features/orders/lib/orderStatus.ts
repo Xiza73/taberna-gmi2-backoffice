@@ -1,4 +1,4 @@
-import type { OrderStatus } from '@/types/dashboard';
+import type { OrderStatus } from '@/types/orders';
 
 export const ORDER_STATUSES: OrderStatus[] = [
   'pending',
