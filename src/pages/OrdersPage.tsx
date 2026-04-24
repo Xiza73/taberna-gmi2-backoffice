@@ -97,7 +97,7 @@ export function OrdersPage() {
           ) : data ? (
             <>
               <OrdersTable orders={data.items} onSelect={handleSelect} />
-              {data.totalPages > 1 && (
+              {data.total > 0 && (
                 <Pagination
                   currentPage={data.page}
                   totalPages={data.totalPages}

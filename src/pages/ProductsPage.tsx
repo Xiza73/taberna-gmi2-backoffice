@@ -149,7 +149,7 @@ export function ProductsPage() {
                 onEdit={handleEdit}
                 onDelete={setDeleting}
               />
-              {data.totalPages > 1 && (
+              {data.total > 0 && (
                 <Pagination
                   currentPage={data.page}
                   totalPages={data.totalPages}
