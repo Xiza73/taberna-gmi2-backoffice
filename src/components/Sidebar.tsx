@@ -112,11 +112,11 @@ export function Sidebar() {
         <div className="h-full flex flex-col overflow-hidden">
           {/* Logo */}
           <div className="p-6 border-b border-sidebar-border">
-            <h1 className="text-2xl tracking-tight">
+            <h1 className="text-2xl lg:text-3xl tracking-tight mb-1">
               <span className="text-primary">E</span>
               <span className="text-foreground">Commerce</span>
             </h1>
-            <p className="text-xs text-muted-foreground mt-1">Backoffice</p>
+            <p className="text-sm text-muted-foreground">Backoffice</p>
           </div>
 
           {/* Navigation */}
