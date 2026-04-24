@@ -1,18 +1,12 @@
-export type StaffRole = 'super_admin' | 'admin' | 'user';
+import type { Staff, StaffRole } from './staff';
+
+export type { StaffRole };
+
+export type StaffMe = Staff;
 
 export interface AuthTokens {
   accessToken: string;
   refreshToken: string;
-}
-
-export interface StaffMe {
-  id: string;
-  name: string;
-  email: string;
-  role: StaffRole;
-  isActive: boolean;
-  invitedBy: string | null;
-  createdAt: string;
 }
 
 export interface LoginInput {
