@@ -27,6 +27,7 @@ import { ProductNewPage } from '@/pages/ProductNewPage';
 import { ProductEditPage } from '@/pages/ProductEditPage';
 import { OrderDetailPage } from '@/pages/OrderDetailPage';
 import { LoginPage } from '@/pages/LoginPage';
+import { RegisterStaffPage } from '@/pages/RegisterStaffPage';
 import { authKeys } from '@/features/auth';
 import { staffAuthApi } from '@/api/staffAuthApi';
 
@@ -193,6 +194,18 @@ const loginRoute = createRoute({
   }),
 });
 
+// --- Staff register (public, NO redirect-if-authed) ---
+// Lives directly under root so accepting an invite while logged-in as someone
+// else replaces the session cleanly without bouncing back to /.
+const staffRegisterRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/staff/register',
+  component: RegisterStaffPage,
+  validateSearch: (search: Record<string, unknown>) => ({
+    token: typeof search.token === 'string' ? search.token : undefined,
+  }),
+});
+
 export const routeTree = rootRoute.addChildren([
   authedLayoutRoute.addChildren([
     dashboardRoute,
@@ -216,4 +229,5 @@ export const routeTree = rootRoute.addChildren([
     settingsRoute,
   ]),
   publicLayoutRoute.addChildren([loginRoute]),
+  staffRegisterRoute,
 ]);
