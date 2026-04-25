@@ -1,4 +1,10 @@
-import type { AuthTokens, LoginInput, StaffMe } from '@/types/auth';
+import type {
+  AuthTokens,
+  ChangePasswordInput,
+  LoginInput,
+  StaffMe,
+  UpdateProfileInput,
+} from '@/types/auth';
 import { apiClient } from './client';
 import { clearTokens, setTokens } from './tokens';
 
@@ -14,6 +20,14 @@ export const staffAuthApi = {
 
   me(): Promise<StaffMe> {
     return apiClient.get<StaffMe>('/staff/auth/me');
+  },
+
+  updateProfile(input: UpdateProfileInput): Promise<StaffMe> {
+    return apiClient.patch<StaffMe>('/staff/auth/profile', input);
+  },
+
+  changePassword(input: ChangePasswordInput): Promise<void> {
+    return apiClient.patch<void>('/staff/auth/change-password', input);
   },
 
   async logout(): Promise<void> {
