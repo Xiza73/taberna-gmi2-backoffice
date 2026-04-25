@@ -28,6 +28,7 @@ import { ProductEditPage } from '@/pages/ProductEditPage';
 import { OrderDetailPage } from '@/pages/OrderDetailPage';
 import { CustomerDetailPage } from '@/pages/CustomerDetailPage';
 import { CouponsPage } from '@/pages/CouponsPage';
+import { BannersPage } from '@/pages/BannersPage';
 import { LoginPage } from '@/pages/LoginPage';
 import { RegisterStaffPage } from '@/pages/RegisterStaffPage';
 import { authKeys } from '@/features/auth';
@@ -126,6 +127,12 @@ const couponsRoute = createRoute({
   getParentRoute: () => authedLayoutRoute,
   path: '/coupons',
   component: CouponsPage,
+});
+
+const bannersRoute = createRoute({
+  getParentRoute: () => authedLayoutRoute,
+  path: '/banners',
+  component: BannersPage,
 });
 
 const promotionsRoute = createRoute({
@@ -233,6 +240,7 @@ export const routeTree = rootRoute.addChildren([
     paymentsRoute,
     shippingRoute,
     couponsRoute,
+    bannersRoute,
     promotionsRoute,
     usersRoute,
     customersRoute,

@@ -9,6 +9,7 @@ import {
   X,
   LayoutDashboard,
   FolderTree,
+  Image,
   Truck,
   TicketPercent,
   MessageSquare,
@@ -47,6 +48,7 @@ const menuSections: MenuSection[] = [
     items: [
       { id: 'products', label: 'Productos', icon: Package, path: '/products' },
       { id: 'categories', label: 'Categorías', icon: FolderTree, path: '/categories' },
+      { id: 'banners', label: 'Banners', icon: Image, path: '/banners' },
     ],
   },
   {
