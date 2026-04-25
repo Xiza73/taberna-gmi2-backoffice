@@ -27,6 +27,7 @@ import { ProductNewPage } from '@/pages/ProductNewPage';
 import { ProductEditPage } from '@/pages/ProductEditPage';
 import { OrderDetailPage } from '@/pages/OrderDetailPage';
 import { CustomerDetailPage } from '@/pages/CustomerDetailPage';
+import { CouponsPage } from '@/pages/CouponsPage';
 import { LoginPage } from '@/pages/LoginPage';
 import { RegisterStaffPage } from '@/pages/RegisterStaffPage';
 import { authKeys } from '@/features/auth';
@@ -119,6 +120,12 @@ const shippingRoute = createRoute({
   getParentRoute: () => authedLayoutRoute,
   path: '/shipping',
   component: ShippingPage,
+});
+
+const couponsRoute = createRoute({
+  getParentRoute: () => authedLayoutRoute,
+  path: '/coupons',
+  component: CouponsPage,
 });
 
 const promotionsRoute = createRoute({
@@ -225,6 +232,7 @@ export const routeTree = rootRoute.addChildren([
     orderDetailRoute,
     paymentsRoute,
     shippingRoute,
+    couponsRoute,
     promotionsRoute,
     usersRoute,
     customersRoute,

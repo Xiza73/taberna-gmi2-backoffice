@@ -12,6 +12,7 @@ import type {
   Product,
   UpdateProductInput,
 } from '@/types/products';
+import { centsToSolesString, solesStringToCents } from '@/utils/format';
 import { slugify } from '@/utils/slugify';
 import {
   useCreateProduct,
@@ -41,24 +42,13 @@ interface FormValues {
 
 const slugPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
-function centsToSoles(cents: number | null | undefined): string {
-  if (cents === null || cents === undefined) return '';
-  return (cents / 100).toFixed(2);
-}
-
-function solesToCents(soles: string): number {
-  const parsed = Number.parseFloat(soles);
-  if (Number.isNaN(parsed)) return 0;
-  return Math.round(parsed * 100);
-}
-
 function buildDefaults(product?: Product): FormValues {
   return {
     name: product?.name ?? '',
     slug: product?.slug ?? '',
     description: product?.description ?? '',
-    priceSoles: centsToSoles(product?.price),
-    compareAtPriceSoles: centsToSoles(product?.compareAtPrice),
+    priceSoles: centsToSolesString(product?.price),
+    compareAtPriceSoles: centsToSolesString(product?.compareAtPrice),
     sku: product?.sku ?? '',
     stock: product?.stock ?? 0,
     categoryId: product?.categoryId ?? '',
@@ -101,7 +91,7 @@ export function ProductForm({ mode, product, onSuccess, onCancel }: Props) {
   const images = watch('images');
 
   const onSubmit = async (values: FormValues) => {
-    const priceCents = solesToCents(values.priceSoles);
+    const priceCents = solesStringToCents(values.priceSoles);
     if (priceCents <= 0) {
       setError('priceSoles', { message: 'El precio debe ser mayor a 0' });
       return;
@@ -109,7 +99,7 @@ export function ProductForm({ mode, product, onSuccess, onCancel }: Props) {
 
     let compareAtCents: number | null = null;
     if (values.compareAtPriceSoles.trim() !== '') {
-      compareAtCents = solesToCents(values.compareAtPriceSoles);
+      compareAtCents = solesStringToCents(values.compareAtPriceSoles);
       if (compareAtCents <= priceCents) {
         setError('compareAtPriceSoles', {
           message: 'Debe ser mayor que el precio actual',

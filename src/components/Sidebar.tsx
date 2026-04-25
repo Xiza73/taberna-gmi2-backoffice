@@ -10,6 +10,7 @@ import {
   LayoutDashboard,
   FolderTree,
   Truck,
+  TicketPercent,
   MessageSquare,
   UserCog,
   LogOut,
@@ -53,6 +54,7 @@ const menuSections: MenuSection[] = [
     items: [
       { id: 'orders', label: 'Pedidos', icon: ShoppingCart, path: '/orders' },
       { id: 'shipping', label: 'Envíos', icon: Truck, path: '/shipping' },
+      { id: 'coupons', label: 'Cupones', icon: TicketPercent, path: '/coupons' },
     ],
   },
   {
