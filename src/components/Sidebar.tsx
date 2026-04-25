@@ -15,11 +15,13 @@ import {
   MessageSquare,
   UserCog,
   LogOut,
+  BarChart3,
   type LucideIcon,
 } from 'lucide-react';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useAuth } from '@/features/auth';
 import { roleLabels } from '@/features/staff/lib/role';
+import type { StaffRole } from '@/types/auth';
 
 function getInitials(name: string): string {
   const parts = name.trim().split(/\s+/).slice(0, 2);
@@ -31,12 +33,16 @@ interface MenuItem {
   label: string;
   icon: LucideIcon;
   path: string;
+  /** If set, only shown to these roles. Omit to show to all staff. */
+  allowRoles?: StaffRole[];
 }
 
 interface MenuSection {
   title: string;
   items: MenuItem[];
 }
+
+const ADMINS_ONLY: StaffRole[] = ['super_admin', 'admin'];
 
 const menuSections: MenuSection[] = [
   {
@@ -74,15 +80,43 @@ const menuSections: MenuSection[] = [
   },
   {
     title: 'Sistema',
-    items: [{ id: 'settings', label: 'Configuración', icon: Settings, path: '/settings' }],
+    items: [
+      {
+        id: 'reports',
+        label: 'Reportes',
+        icon: BarChart3,
+        path: '/reports',
+        allowRoles: ADMINS_ONLY,
+      },
+      { id: 'settings', label: 'Configuración', icon: Settings, path: '/settings' },
+    ],
   },
 ];
+
+function filterMenuByRole(
+  sections: MenuSection[],
+  role: StaffRole | null,
+): MenuSection[] {
+  if (!role) return sections;
+  return sections
+    .map((section) => ({
+      ...section,
+      items: section.items.filter(
+        (item) => !item.allowRoles || item.allowRoles.includes(role),
+      ),
+    }))
+    .filter((section) => section.items.length > 0);
+}
 
 export function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
   const routerState = useRouterState();
   const currentPath = routerState.location.pathname;
   const { me, logout, isLoggingOut } = useAuth();
+  const visibleSections = useMemo(
+    () => filterMenuByRole(menuSections, me?.role ?? null),
+    [me?.role],
+  );
 
   return (
     <>
@@ -125,7 +159,7 @@ export function Sidebar() {
 
           {/* Navigation */}
           <nav className="flex-1 p-4 space-y-6 overflow-y-auto">
-            {menuSections.map((section, sectionIndex) => (
+            {visibleSections.map((section, sectionIndex) => (
               <div key={section.title}>
                 <h3 className="px-4 mb-2 text-xs uppercase tracking-wider text-muted-foreground/70">
                   {section.title}
