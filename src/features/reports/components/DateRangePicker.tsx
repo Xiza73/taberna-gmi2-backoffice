@@ -24,7 +24,8 @@ export function DateRangePicker({
         <input
           type="date"
           value={dateFrom}
-          max={dateTo || maxDate}
+          min="2020-01-01"
+          max={dateTo || maxDate || '2040-12-31'}
           disabled={disabled}
           onChange={(e) => onChange({ dateFrom: e.target.value, dateTo })}
           className="bg-input border border-border rounded-md px-2 py-1.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 disabled:opacity-50"
@@ -35,8 +36,8 @@ export function DateRangePicker({
         <input
           type="date"
           value={dateTo}
-          min={dateFrom}
-          max={maxDate}
+          min={dateFrom || '2020-01-01'}
+          max={maxDate || '2040-12-31'}
           disabled={disabled}
           onChange={(e) => onChange({ dateFrom, dateTo: e.target.value })}
           className="bg-input border border-border rounded-md px-2 py-1.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 disabled:opacity-50"

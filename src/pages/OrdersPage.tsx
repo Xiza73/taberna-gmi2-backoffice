@@ -7,17 +7,26 @@ import {
   useOrders,
 } from '@/features/orders';
 import { useDebounce } from '@/hooks/useDebounce';
-import type { Order, OrderStatus } from '@/types/orders';
+import type {
+  Order,
+  OrderChannel,
+  OrderStatus,
+  PaymentMethod,
+} from '@/types/orders';
 
 const PAGE_SIZE = 20;
 
 type StatusFilter = OrderStatus | '';
+type PaymentMethodFilter = PaymentMethod | '';
+type ChannelFilter = OrderChannel | '';
 
 export function OrdersPage() {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [searchInput, setSearchInput] = useState('');
   const [status, setStatus] = useState<StatusFilter>('');
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethodFilter>('');
+  const [channel, setChannel] = useState<ChannelFilter>('');
   const [dateFrom, setDateFrom] = useState('');
   const [dateTo, setDateTo] = useState('');
 
@@ -28,6 +37,8 @@ export function OrdersPage() {
     limit: PAGE_SIZE,
     search: debouncedSearch.trim() || undefined,
     status: status === '' ? undefined : status,
+    paymentMethod: paymentMethod === '' ? undefined : paymentMethod,
+    channel: channel === '' ? undefined : channel,
     dateFrom: dateFrom || undefined,
     dateTo: dateTo || undefined,
   });
@@ -38,6 +49,14 @@ export function OrdersPage() {
   };
   const onStatusChange = (v: StatusFilter) => {
     setStatus(v);
+    setPage(1);
+  };
+  const onPaymentMethodChange = (v: PaymentMethodFilter) => {
+    setPaymentMethod(v);
+    setPage(1);
+  };
+  const onChannelChange = (v: ChannelFilter) => {
+    setChannel(v);
     setPage(1);
   };
   const onDateFromChange = (v: string) => {
@@ -73,6 +92,10 @@ export function OrdersPage() {
             onSearchChange={onSearchChange}
             status={status}
             onStatusChange={onStatusChange}
+            paymentMethod={paymentMethod}
+            onPaymentMethodChange={onPaymentMethodChange}
+            channel={channel}
+            onChannelChange={onChannelChange}
             dateFrom={dateFrom}
             onDateFromChange={onDateFromChange}
             dateTo={dateTo}

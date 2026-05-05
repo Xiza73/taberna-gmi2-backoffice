@@ -1,6 +1,8 @@
 import { ArrowLeft } from 'lucide-react';
 import { useNavigate, useParams } from '@tanstack/react-router';
 import {
+  channelBadgeClass,
+  channelLabels,
   OrderAdminNotesEditor,
   OrderCustomerCard,
   OrderEventsTimeline,
@@ -10,8 +12,11 @@ import {
   OrderStatusActions,
   OrderStatusBadge,
   OrderTotalsCard,
+  paymentMethodBadgeClass,
+  paymentMethodLabels,
   useOrder,
 } from '@/features/orders';
+import { OrderPaymentCard } from '@/features/payments';
 import { formatDateTime } from '@/utils/format';
 
 export function OrderDetailPage() {
@@ -46,6 +51,20 @@ export function OrderDetailPage() {
               </h2>
               {orderQuery.data && (
                 <OrderStatusBadge status={orderQuery.data.status} />
+              )}
+              {orderQuery.data && (
+                <span
+                  className={`inline-block px-2 py-0.5 rounded text-xs ${paymentMethodBadgeClass[orderQuery.data.paymentMethod]}`}
+                >
+                  {paymentMethodLabels[orderQuery.data.paymentMethod]}
+                </span>
+              )}
+              {orderQuery.data && orderQuery.data.channel !== 'online' && (
+                <span
+                  className={`inline-block px-2 py-0.5 rounded text-xs ${channelBadgeClass[orderQuery.data.channel]}`}
+                >
+                  {channelLabels[orderQuery.data.channel]}
+                </span>
               )}
             </div>
             {orderQuery.data && (
@@ -89,6 +108,10 @@ export function OrderDetailPage() {
             </div>
             <aside className="space-y-4">
               <OrderTotalsCard order={orderQuery.data} />
+              <OrderPaymentCard
+                orderId={orderId}
+                paymentMethod={orderQuery.data.paymentMethod}
+              />
               <OrderCustomerCard order={orderQuery.data} />
               <OrderShipmentCard
                 orderId={orderId}

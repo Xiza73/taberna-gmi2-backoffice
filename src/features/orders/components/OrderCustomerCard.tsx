@@ -1,21 +1,23 @@
-import { Mail, MapPin, Phone, User } from 'lucide-react';
+import { FileText, Mail, MapPin, Phone, User } from 'lucide-react';
 import type { Order } from '@/types/orders';
+import { customerDocTypeLabels } from '../lib/customerDocType';
 
 interface Props {
   order: Order;
 }
 
 export function OrderCustomerCard({ order }: Props) {
-  const addr = order.shippingAddressSnapshot ?? {};
-  const street = (addr.street as string | undefined) ?? '';
-  const district = (addr.district as string | undefined) ?? '';
-  const city = (addr.city as string | undefined) ?? '';
-  const department = (addr.department as string | undefined) ?? '';
-  const reference = (addr.reference as string | undefined) ?? '';
-  const recipientName = (addr.recipientName as string | undefined) ?? '';
+  const addr = order.shippingAddressSnapshot;
+  const street = (addr?.street as string | undefined) ?? '';
+  const district = (addr?.district as string | undefined) ?? '';
+  const city = (addr?.city as string | undefined) ?? '';
+  const department = (addr?.department as string | undefined) ?? '';
+  const reference = (addr?.reference as string | undefined) ?? '';
+  const recipientName = (addr?.recipientName as string | undefined) ?? '';
 
   const hasAddress =
-    street || district || city || department || reference || recipientName;
+    !!addr &&
+    (street || district || city || department || reference || recipientName);
 
   return (
     <div className="bg-card border border-border rounded-lg p-4 lg:p-5 space-y-4">
@@ -26,6 +28,12 @@ export function OrderCustomerCard({ order }: Props) {
         <Row icon={<Mail size={14} />} value={order.customerEmail} />
         {order.customerPhone && (
           <Row icon={<Phone size={14} />} value={order.customerPhone} />
+        )}
+        {order.customerDocType && order.customerDocNumber && (
+          <Row
+            icon={<FileText size={14} />}
+            value={`${customerDocTypeLabels[order.customerDocType]}: ${order.customerDocNumber}`}
+          />
         )}
       </dl>
 

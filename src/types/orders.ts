@@ -7,6 +7,18 @@ export type OrderStatus =
   | 'cancelled'
   | 'refunded';
 
+export type OrderChannel = 'online' | 'pos' | 'whatsapp';
+
+export type PaymentMethod =
+  | 'mercadopago'
+  | 'cash'
+  | 'yape_plin'
+  | 'bank_transfer';
+
+export type ShippingMethod = 'standard' | 'express' | 'pickup';
+
+export type CustomerDocType = 'dni' | 'ruc';
+
 export interface ShippingAddressSnapshot {
   street?: string;
   district?: string;
@@ -43,7 +55,10 @@ export interface Order {
   id: string;
   orderNumber: string;
   userId: string;
+  channel: OrderChannel;
   status: OrderStatus;
+  paymentMethod: PaymentMethod;
+  shippingMethod: ShippingMethod;
   subtotal: number;
   discount: number;
   shippingCost: number;
@@ -51,10 +66,12 @@ export interface Order {
   couponId: string | null;
   couponCode: string | null;
   couponDiscount: number | null;
-  shippingAddressSnapshot: ShippingAddressSnapshot;
+  shippingAddressSnapshot: ShippingAddressSnapshot | null;
   customerName: string;
   customerEmail: string;
   customerPhone: string | null;
+  customerDocType: CustomerDocType | null;
+  customerDocNumber: string | null;
   notes: string | null;
   adminNotes: string | null;
   createdAt: string;
@@ -68,6 +85,8 @@ export interface OrderListQuery {
   page?: number;
   limit?: number;
   status?: OrderStatus;
+  paymentMethod?: PaymentMethod;
+  channel?: OrderChannel;
   userId?: string;
   dateFrom?: string;
   dateTo?: string;

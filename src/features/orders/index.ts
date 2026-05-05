@@ -28,3 +28,15 @@ export {
   orderStatusChartColor,
 } from './lib/orderStatus';
 export { CARRIERS, carrierLabels } from './lib/carrier';
+export {
+  PAYMENT_METHODS,
+  paymentMethodLabels,
+  paymentMethodBadgeClass,
+} from './lib/paymentMethod';
+export { SHIPPING_METHODS, shippingMethodLabels } from './lib/shippingMethod';
+export {
+  ORDER_CHANNELS,
+  channelLabels,
+  channelBadgeClass,
+} from './lib/channel';
+export { customerDocTypeLabels } from './lib/customerDocType';

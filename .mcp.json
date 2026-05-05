@@ -1,4 +1,8 @@
 {
-  "$schema": "https://claude.ai/schemas/mcp-config.json",
-  "mcpServers": {}
+  "mcpServers": {
+    "mercadopago": {
+      "type": "http",
+      "url": "https://mcp.mercadopago.com/mcp"
+    }
+  }
 }

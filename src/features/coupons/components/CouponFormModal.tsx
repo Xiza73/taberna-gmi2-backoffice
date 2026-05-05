@@ -280,12 +280,16 @@ export function CouponFormModal({ isOpen, onClose, coupon }: Props) {
           <Input
             label="Fecha de inicio"
             type="date"
+            min="2020-01-01"
+            max="2040-12-31"
             error={errors.startDate?.message}
             {...register('startDate', { required: 'Requerida' })}
           />
           <Input
             label="Fecha de fin"
             type="date"
+            min="2020-01-01"
+            max="2040-12-31"
             error={errors.endDate?.message}
             {...register('endDate', { required: 'Requerida' })}
           />

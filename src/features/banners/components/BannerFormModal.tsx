@@ -203,11 +203,15 @@ export function BannerFormModal({ isOpen, onClose, banner }: Props) {
           <Input
             label="Vigencia desde — opcional"
             type="date"
+            min="2020-01-01"
+            max="2040-12-31"
             {...register('startDate')}
           />
           <Input
             label="Vigencia hasta — opcional"
             type="date"
+            min="2020-01-01"
+            max="2040-12-31"
             error={errors.endDate?.message}
             {...register('endDate')}
           />

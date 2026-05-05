@@ -1,5 +1,6 @@
 import { formatPEN } from '@/utils/format';
 import type { Order } from '@/types/orders';
+import { shippingMethodLabels } from '../lib/shippingMethod';
 
 interface Props {
   order: Order;
@@ -22,7 +23,10 @@ export function OrderTotalsCard({ order }: Props) {
             valueClass="text-emerald-400"
           />
         )}
-        <Row label="Envío" value={formatPEN(order.shippingCost)} />
+        <Row
+          label={`Envío (${shippingMethodLabels[order.shippingMethod]})`}
+          value={formatPEN(order.shippingCost)}
+        />
         <div className="pt-2 mt-2 border-t border-border">
           <Row
             label="Total"
