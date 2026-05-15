@@ -1,8 +1,14 @@
 import { useAuth } from '@/features/auth';
-import { ChangePasswordForm, ProfileForm } from '@/features/settings';
+import {
+  ChangePasswordForm,
+  ProfileForm,
+  StoreSettingsForm,
+} from '@/features/settings';
 
 export function SettingsPage() {
   const { me, isLoading } = useAuth();
+  const canViewStore = me?.role === 'super_admin' || me?.role === 'admin';
+  const canEditStore = me?.role === 'super_admin';
 
   return (
     <div className="flex-1 overflow-auto">
@@ -10,23 +16,33 @@ export function SettingsPage() {
         <div className="p-4 pl-16 lg:pl-6 lg:p-6">
           <h2 className="text-2xl lg:text-3xl mb-1">Configuración</h2>
           <p className="text-sm text-muted-foreground">
-            Tus datos de staff y seguridad de cuenta.
+            Tus datos de staff, seguridad y configuración general de la tienda.
           </p>
         </div>
       </div>
 
-      <div className="p-4 lg:p-6">
+      <div className="p-4 lg:p-6 space-y-6">
         {isLoading ? (
           <SettingsSkeleton />
         ) : me ? (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 max-w-4xl">
-            <SectionCard title="Mi perfil">
-              <ProfileForm me={me} />
-            </SectionCard>
-            <SectionCard title="Cambiar contraseña">
-              <ChangePasswordForm />
-            </SectionCard>
-          </div>
+          <>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 max-w-4xl">
+              <SectionCard title="Mi perfil">
+                <ProfileForm me={me} />
+              </SectionCard>
+              <SectionCard title="Cambiar contraseña">
+                <ChangePasswordForm />
+              </SectionCard>
+            </div>
+
+            {canViewStore && (
+              <div className="max-w-4xl">
+                <SectionCard title="Configuración de tienda">
+                  <StoreSettingsForm canEdit={canEditStore} />
+                </SectionCard>
+              </div>
+            )}
+          </>
         ) : null}
       </div>
     </div>
