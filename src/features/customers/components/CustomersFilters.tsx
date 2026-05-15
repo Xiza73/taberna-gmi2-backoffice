@@ -1,8 +1,11 @@
 import { Search } from 'lucide-react';
 import { Input } from '@/components/ui/Input';
 import { Select } from '@/components/ui/Select';
+import { parseEnum } from '@/utils/parseEnum';
 
 type StatusFilter = 'all' | 'active' | 'inactive';
+
+const STATUS_VALUES = ['all', 'active', 'inactive'] as const;
 
 interface Props {
   searchInput: string;
@@ -43,7 +46,9 @@ export function CustomersFilters({
         label="Estado"
         options={statusOptions}
         value={status}
-        onChange={(e) => onStatusChange(e.target.value as StatusFilter)}
+        onChange={(e) =>
+          onStatusChange(parseEnum(e.currentTarget.value, STATUS_VALUES, 'all'))
+        }
       />
     </div>
   );

@@ -2,10 +2,14 @@ import { Search } from 'lucide-react';
 import { Input } from '@/components/ui/Input';
 import { Select } from '@/components/ui/Select';
 import type { StaffRole } from '@/types/staff';
+import { parseEnum } from '@/utils/parseEnum';
 import { STAFF_ROLES, roleLabels } from '../lib/role';
 
 type RoleFilter = StaffRole | '';
 type StatusFilter = 'all' | 'active' | 'inactive';
+
+const ROLE_VALUES = ['', ...STAFF_ROLES] as const;
+const STATUS_VALUES = ['all', 'active', 'inactive'] as const;
 
 interface Props {
   searchInput: string;
@@ -55,14 +59,18 @@ export function StaffFilters({
         label="Rol"
         options={roleOptions}
         value={role}
-        onChange={(e) => onRoleChange(e.target.value as RoleFilter)}
+        onChange={(e) =>
+          onRoleChange(parseEnum(e.currentTarget.value, ROLE_VALUES, ''))
+        }
       />
 
       <Select
         label="Estado"
         options={statusOptions}
         value={status}
-        onChange={(e) => onStatusChange(e.target.value as StatusFilter)}
+        onChange={(e) =>
+          onStatusChange(parseEnum(e.currentTarget.value, STATUS_VALUES, 'all'))
+        }
       />
     </div>
   );

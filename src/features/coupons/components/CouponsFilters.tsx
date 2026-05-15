@@ -2,10 +2,14 @@ import { Search } from 'lucide-react';
 import { Input } from '@/components/ui/Input';
 import { Select } from '@/components/ui/Select';
 import type { CouponType } from '@/types/coupons';
+import { parseEnum } from '@/utils/parseEnum';
 import { COUPON_TYPES, couponTypeLabels } from '../lib/couponType';
 
 type TypeFilter = CouponType | '';
 type StatusFilter = 'all' | 'active' | 'inactive';
+
+const TYPE_VALUES = ['', ...COUPON_TYPES] as const;
+const STATUS_VALUES = ['all', 'active', 'inactive'] as const;
 
 interface Props {
   searchInput: string;
@@ -55,14 +59,18 @@ export function CouponsFilters({
         label="Tipo"
         options={typeOptions}
         value={type}
-        onChange={(e) => onTypeChange(e.target.value as TypeFilter)}
+        onChange={(e) =>
+          onTypeChange(parseEnum(e.currentTarget.value, TYPE_VALUES, ''))
+        }
       />
 
       <Select
         label="Estado"
         options={statusOptions}
         value={status}
-        onChange={(e) => onStatusChange(e.target.value as StatusFilter)}
+        onChange={(e) =>
+          onStatusChange(parseEnum(e.currentTarget.value, STATUS_VALUES, 'all'))
+        }
       />
     </div>
   );

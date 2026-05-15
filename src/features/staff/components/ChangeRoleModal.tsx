@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/Button';
 import { Modal } from '@/components/ui/Modal';
 import { Select } from '@/components/ui/Select';
 import type { Staff, StaffRole } from '@/types/staff';
+import { parseEnum } from '@/utils/parseEnum';
 import { STAFF_ROLES, roleLabels } from '../lib/role';
 import { useChangeStaffRole } from '../hooks/useStaffMutations';
 
@@ -59,7 +60,7 @@ export function ChangeRoleModal({ isOpen, onClose, staff }: Props) {
           label="Nuevo rol"
           options={roleOptions}
           value={role}
-          onChange={(e) => setRole(e.target.value as StaffRole)}
+          onChange={(e) => setRole(parseEnum(e.currentTarget.value, STAFF_ROLES, 'user'))}
           disabled={isPending}
         />
 

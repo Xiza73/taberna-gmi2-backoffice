@@ -3,6 +3,15 @@ import { Input } from '@/components/ui/Input';
 import { Select } from '@/components/ui/Select';
 import type { Category } from '@/types/categories';
 import type { ProductSortBy } from '@/types/products';
+import { parseEnum } from '@/utils/parseEnum';
+
+const SORT_VALUES = [
+  'newest',
+  'name',
+  'price',
+  'price_desc',
+  'rating',
+] as const satisfies readonly ProductSortBy[];
 
 interface Props {
   searchInput: string;
@@ -67,7 +76,9 @@ export function ProductsFilters({
         label="Ordenar por"
         options={sortOptions}
         value={sortBy}
-        onChange={(e) => onSortChange(e.target.value as ProductSortBy)}
+        onChange={(e) =>
+          onSortChange(parseEnum(e.currentTarget.value, SORT_VALUES, 'newest'))
+        }
       />
 
       <label className="flex items-center gap-2 text-sm text-muted-foreground cursor-pointer md:col-span-2 lg:col-span-4">

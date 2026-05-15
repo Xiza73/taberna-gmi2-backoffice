@@ -6,6 +6,7 @@ import type {
   OrderStatus,
   PaymentMethod,
 } from '@/types/orders';
+import { parseEnum } from '@/utils/parseEnum';
 import { ORDER_STATUSES, orderStatusLabels } from '../lib/orderStatus';
 import { PAYMENT_METHODS, paymentMethodLabels } from '../lib/paymentMethod';
 import { ORDER_CHANNELS, channelLabels } from '../lib/channel';
@@ -13,6 +14,10 @@ import { ORDER_CHANNELS, channelLabels } from '../lib/channel';
 type StatusFilter = OrderStatus | '';
 type PaymentMethodFilter = PaymentMethod | '';
 type ChannelFilter = OrderChannel | '';
+
+const STATUS_VALUES = ['', ...ORDER_STATUSES] as const;
+const PAYMENT_METHOD_VALUES = ['', ...PAYMENT_METHODS] as const;
+const CHANNEL_VALUES = ['', ...ORDER_CHANNELS] as const;
 
 interface Props {
   searchInput: string;
@@ -81,7 +86,9 @@ export function OrdersFilters({
         label="Estado"
         options={statusOptions}
         value={status}
-        onChange={(e) => onStatusChange(e.target.value as StatusFilter)}
+        onChange={(e) =>
+          onStatusChange(parseEnum(e.currentTarget.value, STATUS_VALUES, ''))
+        }
       />
 
       <Select
@@ -89,7 +96,9 @@ export function OrdersFilters({
         options={paymentMethodOptions}
         value={paymentMethod}
         onChange={(e) =>
-          onPaymentMethodChange(e.target.value as PaymentMethodFilter)
+          onPaymentMethodChange(
+            parseEnum(e.currentTarget.value, PAYMENT_METHOD_VALUES, ''),
+          )
         }
       />
 
@@ -97,7 +106,9 @@ export function OrdersFilters({
         label="Canal"
         options={channelOptions}
         value={channel}
-        onChange={(e) => onChannelChange(e.target.value as ChannelFilter)}
+        onChange={(e) =>
+          onChannelChange(parseEnum(e.currentTarget.value, CHANNEL_VALUES, ''))
+        }
       />
 
       <div className="grid grid-cols-2 gap-2 lg:col-span-3">

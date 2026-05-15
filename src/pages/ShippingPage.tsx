@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/Table';
 import { OrderStatusBadge, useOrders } from '@/features/orders';
 import { useDebounce } from '@/hooks/useDebounce';
+import { parseEnum } from '@/utils/parseEnum';
 import { formatDateTime } from '@/utils/format';
 import type { Order, OrderStatus } from '@/types/orders';
 
@@ -26,6 +27,14 @@ const SHIPPABLE_STATUSES: OrderStatus[] = [
 ];
 
 type StatusFilter = 'all' | OrderStatus;
+
+const STATUS_FILTER_VALUES = [
+  'all',
+  'paid',
+  'processing',
+  'shipped',
+  'delivered',
+] as const satisfies readonly StatusFilter[];
 
 const statusOptions: { value: StatusFilter; label: string }[] = [
   { value: 'all', label: 'Todos los enviables' },
@@ -96,7 +105,9 @@ export function ShippingPage() {
               className="h-10 rounded-md border border-input bg-background px-3 text-sm"
               value={statusFilter}
               onChange={(e) => {
-                setStatusFilter(e.target.value as StatusFilter);
+                setStatusFilter(
+                  parseEnum(e.currentTarget.value, STATUS_FILTER_VALUES, 'all'),
+                );
                 setPage(1);
               }}
             >

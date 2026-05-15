@@ -21,6 +21,7 @@ import {
   useOrders,
 } from '@/features/orders';
 import { useDebounce } from '@/hooks/useDebounce';
+import { parseEnum } from '@/utils/parseEnum';
 import { formatDateTime, formatPEN } from '@/utils/format';
 import type {
   Order,
@@ -32,6 +33,9 @@ const PAGE_SIZE = 20;
 
 type StatusFilter = OrderStatus | '';
 type MethodFilter = PaymentMethod | '';
+
+const STATUS_VALUES = ['', ...ORDER_STATUSES] as const;
+const METHOD_VALUES = ['', ...PAYMENT_METHODS] as const;
 
 export function PaymentsPage() {
   const navigate = useNavigate();
@@ -90,7 +94,9 @@ export function PaymentsPage() {
               className="h-10 rounded-md border border-input bg-background px-3 text-sm"
               value={paymentMethod}
               onChange={(e) => {
-                setPaymentMethod(e.target.value as MethodFilter);
+                setPaymentMethod(
+                  parseEnum(e.currentTarget.value, METHOD_VALUES, ''),
+                );
                 setPage(1);
               }}
             >
@@ -106,7 +112,7 @@ export function PaymentsPage() {
               className="h-10 rounded-md border border-input bg-background px-3 text-sm"
               value={status}
               onChange={(e) => {
-                setStatus(e.target.value as StatusFilter);
+                setStatus(parseEnum(e.currentTarget.value, STATUS_VALUES, ''));
                 setPage(1);
               }}
             >

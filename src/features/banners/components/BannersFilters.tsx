@@ -2,10 +2,14 @@ import { Search } from 'lucide-react';
 import { Input } from '@/components/ui/Input';
 import { Select } from '@/components/ui/Select';
 import type { BannerPosition } from '@/types/banners';
+import { parseEnum } from '@/utils/parseEnum';
 import { BANNER_POSITIONS, positionLabels } from '../lib/position';
 
 type PositionFilter = BannerPosition | '';
 type StatusFilter = 'all' | 'active' | 'inactive';
+
+const POSITION_VALUES = ['', ...BANNER_POSITIONS] as const;
+const STATUS_VALUES = ['all', 'active', 'inactive'] as const;
 
 interface Props {
   searchInput: string;
@@ -55,14 +59,18 @@ export function BannersFilters({
         label="Posición"
         options={positionOptions}
         value={position}
-        onChange={(e) => onPositionChange(e.target.value as PositionFilter)}
+        onChange={(e) =>
+          onPositionChange(parseEnum(e.currentTarget.value, POSITION_VALUES, ''))
+        }
       />
 
       <Select
         label="Estado"
         options={statusOptions}
         value={status}
-        onChange={(e) => onStatusChange(e.target.value as StatusFilter)}
+        onChange={(e) =>
+          onStatusChange(parseEnum(e.currentTarget.value, STATUS_VALUES, 'all'))
+        }
       />
     </div>
   );

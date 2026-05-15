@@ -1,7 +1,11 @@
 import { Select } from '@/components/ui/Select';
+import { parseEnum } from '@/utils/parseEnum';
 
 type StatusFilter = 'pending' | 'approved';
 type RatingFilter = '' | '1' | '2' | '3' | '4' | '5';
+
+const STATUS_VALUES = ['pending', 'approved'] as const;
+const RATING_VALUES = ['', '1', '2', '3', '4', '5'] as const;
 
 interface Props {
   status: StatusFilter;
@@ -36,14 +40,20 @@ export function ReviewsFilters({
         label="Estado"
         options={statusOptions}
         value={status}
-        onChange={(e) => onStatusChange(e.target.value as StatusFilter)}
+        onChange={(e) =>
+          onStatusChange(
+            parseEnum(e.currentTarget.value, STATUS_VALUES, 'pending'),
+          )
+        }
       />
 
       <Select
         label="Puntuación"
         options={ratingOptions}
         value={rating}
-        onChange={(e) => onRatingChange(e.target.value as RatingFilter)}
+        onChange={(e) =>
+          onRatingChange(parseEnum(e.currentTarget.value, RATING_VALUES, ''))
+        }
       />
     </div>
   );
