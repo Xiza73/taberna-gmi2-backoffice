@@ -122,12 +122,16 @@ export function Sidebar() {
     <>
       {/* Mobile menu button */}
       <button
+        type="button"
         onClick={() => setIsOpen(!isOpen)}
+        aria-label={isOpen ? 'Cerrar menú' : 'Abrir menú'}
+        aria-expanded={isOpen}
+        aria-controls="sidebar-nav"
         className={`lg:hidden fixed top-5 z-50 p-2.5 rounded-lg bg-sidebar border border-sidebar-border text-foreground shadow-lg transition-all duration-300 ${
           isOpen ? 'left-[17rem]' : 'left-4'
         }`}
       >
-        {isOpen ? <X size={20} /> : <Menu size={20} />}
+        {isOpen ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
       </button>
 
       {/* Overlay for mobile */}
@@ -158,7 +162,11 @@ export function Sidebar() {
           </div>
 
           {/* Navigation */}
-          <nav className="flex-1 p-4 space-y-6 overflow-y-auto">
+          <nav
+            id="sidebar-nav"
+            aria-label="Navegación principal"
+            className="flex-1 p-4 space-y-6 overflow-y-auto"
+          >
             {visibleSections.map((section, sectionIndex) => (
               <div key={section.title}>
                 <h3 className="px-4 mb-2 text-xs uppercase tracking-wider text-muted-foreground/70">
@@ -189,7 +197,11 @@ export function Sidebar() {
                               : 'text-muted-foreground hover:bg-sidebar-accent/50 hover:text-foreground'
                           }`}
                         >
-                          <Icon size={18} className={isActive ? 'text-primary' : ''} />
+                          <Icon
+                            size={18}
+                            aria-hidden="true"
+                            className={isActive ? 'text-primary' : ''}
+                          />
                           <span className="text-sm">{item.label}</span>
                           {isActive && (
                             <motion.div
@@ -225,7 +237,7 @@ export function Sidebar() {
               disabled={isLoggingOut}
               className="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm text-muted-foreground hover:bg-sidebar-accent/50 hover:text-foreground transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <LogOut size={16} />
+              <LogOut size={16} aria-hidden="true" />
               <span>{isLoggingOut ? 'Saliendo…' : 'Cerrar sesión'}</span>
             </button>
           </div>

@@ -1,3 +1,4 @@
+import { lazy, Suspense, type ComponentType, type FC } from 'react';
 import {
   createRootRouteWithContext,
   createRoute,
@@ -7,24 +8,15 @@ import type { QueryClient } from '@tanstack/react-query';
 import { RootLayout } from '@/layouts/RootLayout';
 import { AuthedLayout } from '@/layouts/AuthedLayout';
 import { PublicLayout } from '@/layouts/PublicLayout';
-import { DashboardPage } from '@/pages/DashboardPage';
 import { ProductsPage } from '@/pages/ProductsPage';
 import { CategoriesPage } from '@/pages/CategoriesPage';
-import { BrandsPage } from '@/pages/BrandsPage';
 import { OrdersPage } from '@/pages/OrdersPage';
 import { PaymentsPage } from '@/pages/PaymentsPage';
 import { ShippingPage } from '@/pages/ShippingPage';
-import { PromotionsPage } from '@/pages/PromotionsPage';
 import { UsersPage } from '@/pages/UsersPage';
 import { CustomersPage } from '@/pages/CustomersPage';
-import { StoresPage } from '@/pages/StoresPage';
 import { ReviewsPage } from '@/pages/ReviewsPage';
-import { NotificationsPage } from '@/pages/NotificationsPage';
-import { AnalyticsPage } from '@/pages/AnalyticsPage';
-import { ReportsPage } from '@/pages/ReportsPage';
 import { SettingsPage } from '@/pages/SettingsPage';
-import { ProductNewPage } from '@/pages/ProductNewPage';
-import { ProductEditPage } from '@/pages/ProductEditPage';
 import { OrderDetailPage } from '@/pages/OrderDetailPage';
 import { CustomerDetailPage } from '@/pages/CustomerDetailPage';
 import { CouponsPage } from '@/pages/CouponsPage';
@@ -33,6 +25,44 @@ import { LoginPage } from '@/pages/LoginPage';
 import { RegisterStaffPage } from '@/pages/RegisterStaffPage';
 import { authKeys } from '@/features/auth';
 import { staffAuthApi } from '@/api/staffAuthApi';
+
+// --- Lazy-loaded pages (split heavy deps: recharts, @dnd-kit) ---
+const DashboardPageLazy = lazy(() =>
+  import('@/pages/DashboardPage').then((m) => ({ default: m.DashboardPage })),
+);
+const ReportsPageLazy = lazy(() =>
+  import('@/pages/ReportsPage').then((m) => ({ default: m.ReportsPage })),
+);
+const ProductNewPageLazy = lazy(() =>
+  import('@/pages/ProductNewPage').then((m) => ({ default: m.ProductNewPage })),
+);
+const ProductEditPageLazy = lazy(() =>
+  import('@/pages/ProductEditPage').then((m) => ({ default: m.ProductEditPage })),
+);
+
+function PageFallback() {
+  return (
+    <div className="flex-1 overflow-auto p-4 lg:p-6">
+      <div className="space-y-4 animate-pulse">
+        <div className="h-10 w-1/3 rounded-md bg-muted/40" />
+        <div className="h-64 rounded-lg border border-border bg-card/50" />
+        <div className="h-32 rounded-lg border border-border bg-card/50" />
+      </div>
+    </div>
+  );
+}
+
+function withSuspense<P extends object>(
+  LazyComp: ComponentType<P>,
+): FC<P> {
+  const Wrapped: FC<P> = (props) => (
+    <Suspense fallback={<PageFallback />}>
+      <LazyComp {...props} />
+    </Suspense>
+  );
+  Wrapped.displayName = `WithSuspense(${LazyComp.displayName ?? 'Lazy'})`;
+  return Wrapped;
+}
 
 interface RouterContext {
   queryClient: QueryClient;
@@ -66,7 +96,7 @@ const authedLayoutRoute = createRoute({
 const dashboardRoute = createRoute({
   getParentRoute: () => authedLayoutRoute,
   path: '/',
-  component: DashboardPage,
+  component: withSuspense(DashboardPageLazy),
 });
 
 const productsRoute = createRoute({
@@ -78,25 +108,19 @@ const productsRoute = createRoute({
 const productNewRoute = createRoute({
   getParentRoute: () => authedLayoutRoute,
   path: '/products/new',
-  component: ProductNewPage,
+  component: withSuspense(ProductNewPageLazy),
 });
 
 const productEditRoute = createRoute({
   getParentRoute: () => authedLayoutRoute,
   path: '/products/$productId/edit',
-  component: ProductEditPage,
+  component: withSuspense(ProductEditPageLazy),
 });
 
 const categoriesRoute = createRoute({
   getParentRoute: () => authedLayoutRoute,
   path: '/categories',
   component: CategoriesPage,
-});
-
-const brandsRoute = createRoute({
-  getParentRoute: () => authedLayoutRoute,
-  path: '/brands',
-  component: BrandsPage,
 });
 
 const ordersRoute = createRoute({
@@ -135,12 +159,6 @@ const bannersRoute = createRoute({
   component: BannersPage,
 });
 
-const promotionsRoute = createRoute({
-  getParentRoute: () => authedLayoutRoute,
-  path: '/promotions',
-  component: PromotionsPage,
-});
-
 const usersRoute = createRoute({
   getParentRoute: () => authedLayoutRoute,
   path: '/users',
@@ -159,34 +177,16 @@ const customerDetailRoute = createRoute({
   component: CustomerDetailPage,
 });
 
-const storesRoute = createRoute({
-  getParentRoute: () => authedLayoutRoute,
-  path: '/stores',
-  component: StoresPage,
-});
-
 const reviewsRoute = createRoute({
   getParentRoute: () => authedLayoutRoute,
   path: '/reviews',
   component: ReviewsPage,
 });
 
-const notificationsRoute = createRoute({
-  getParentRoute: () => authedLayoutRoute,
-  path: '/notifications',
-  component: NotificationsPage,
-});
-
-const analyticsRoute = createRoute({
-  getParentRoute: () => authedLayoutRoute,
-  path: '/analytics',
-  component: AnalyticsPage,
-});
-
 const reportsRoute = createRoute({
   getParentRoute: () => authedLayoutRoute,
   path: '/reports',
-  component: ReportsPage,
+  component: withSuspense(ReportsPageLazy),
 });
 
 const settingsRoute = createRoute({
@@ -234,21 +234,16 @@ export const routeTree = rootRoute.addChildren([
     productNewRoute,
     productEditRoute,
     categoriesRoute,
-    brandsRoute,
     ordersRoute,
     orderDetailRoute,
     paymentsRoute,
     shippingRoute,
     couponsRoute,
     bannersRoute,
-    promotionsRoute,
     usersRoute,
     customersRoute,
     customerDetailRoute,
-    storesRoute,
     reviewsRoute,
-    notificationsRoute,
-    analyticsRoute,
     reportsRoute,
     settingsRoute,
   ]),
