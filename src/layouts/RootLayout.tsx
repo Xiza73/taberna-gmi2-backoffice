@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Outlet, useNavigate, useRouterState } from '@tanstack/react-router';
 import { Toaster } from 'sonner';
 import { onAuthExpired } from '@/api/tokens';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
 
 export function RootLayout() {
   const navigate = useNavigate();
@@ -18,9 +19,9 @@ export function RootLayout() {
   }, [navigate, routerState.location.href]);
 
   return (
-    <>
+    <ErrorBoundary>
       <Outlet />
       <Toaster position="top-right" theme="dark" />
-    </>
+    </ErrorBoundary>
   );
 }
