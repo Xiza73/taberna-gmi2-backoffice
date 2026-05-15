@@ -29,6 +29,7 @@ import { OrderDetailPage } from '@/pages/OrderDetailPage';
 import { CustomerDetailPage } from '@/pages/CustomerDetailPage';
 import { CashRegistersPage } from '@/pages/CashRegistersPage';
 import { CashRegisterDetailPage } from '@/pages/CashRegisterDetailPage';
+import { PosReportsPage } from '@/pages/PosReportsPage';
 import { CouponsPage } from '@/pages/CouponsPage';
 import { BannersPage } from '@/pages/BannersPage';
 import { LoginPage } from '@/pages/LoginPage';
@@ -123,6 +124,12 @@ const cashRegisterDetailRoute = createRoute({
   getParentRoute: () => authedLayoutRoute,
   path: '/cash-registers/$registerId',
   component: CashRegisterDetailPage,
+});
+
+const posReportsRoute = createRoute({
+  getParentRoute: () => authedLayoutRoute,
+  path: '/pos-reports',
+  component: PosReportsPage,
 });
 
 const paymentsRoute = createRoute({
@@ -253,6 +260,7 @@ export const routeTree = rootRoute.addChildren([
     orderDetailRoute,
     cashRegistersRoute,
     cashRegisterDetailRoute,
+    posReportsRoute,
     paymentsRoute,
     shippingRoute,
     couponsRoute,
