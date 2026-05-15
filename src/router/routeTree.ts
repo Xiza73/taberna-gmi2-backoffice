@@ -27,6 +27,8 @@ import { ProductNewPage } from '@/pages/ProductNewPage';
 import { ProductEditPage } from '@/pages/ProductEditPage';
 import { OrderDetailPage } from '@/pages/OrderDetailPage';
 import { CustomerDetailPage } from '@/pages/CustomerDetailPage';
+import { CashRegistersPage } from '@/pages/CashRegistersPage';
+import { CashRegisterDetailPage } from '@/pages/CashRegisterDetailPage';
 import { CouponsPage } from '@/pages/CouponsPage';
 import { BannersPage } from '@/pages/BannersPage';
 import { LoginPage } from '@/pages/LoginPage';
@@ -109,6 +111,18 @@ const orderDetailRoute = createRoute({
   getParentRoute: () => authedLayoutRoute,
   path: '/orders/$orderId',
   component: OrderDetailPage,
+});
+
+const cashRegistersRoute = createRoute({
+  getParentRoute: () => authedLayoutRoute,
+  path: '/cash-registers',
+  component: CashRegistersPage,
+});
+
+const cashRegisterDetailRoute = createRoute({
+  getParentRoute: () => authedLayoutRoute,
+  path: '/cash-registers/$registerId',
+  component: CashRegisterDetailPage,
 });
 
 const paymentsRoute = createRoute({
@@ -237,6 +251,8 @@ export const routeTree = rootRoute.addChildren([
     brandsRoute,
     ordersRoute,
     orderDetailRoute,
+    cashRegistersRoute,
+    cashRegisterDetailRoute,
     paymentsRoute,
     shippingRoute,
     couponsRoute,
