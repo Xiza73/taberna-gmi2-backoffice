@@ -16,6 +16,7 @@ import {
   UserCog,
   LogOut,
   BarChart3,
+  Wallet,
   type LucideIcon,
 } from 'lucide-react';
 import { useMemo, useState } from 'react';
@@ -76,6 +77,18 @@ const menuSections: MenuSection[] = [
     title: 'Comunicación',
     items: [
       { id: 'reviews', label: 'Reseñas', icon: MessageSquare, path: '/reviews' },
+    ],
+  },
+  {
+    title: 'Operaciones POS',
+    items: [
+      {
+        id: 'cash-registers',
+        label: 'Cajas',
+        icon: Wallet,
+        path: '/cash-registers',
+        allowRoles: ADMINS_ONLY,
+      },
     ],
   },
   {
