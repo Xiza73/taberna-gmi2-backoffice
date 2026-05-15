@@ -19,17 +19,15 @@ function writeToStorage(key: string, value: string | null): void {
   }
 }
 
-// Initialize access token in memory from storage so it survives page reloads
-// without forcing a 401-then-refresh round-trip on every visit. Refresh queue
-// in client.ts still kicks in when the token actually expires.
-let accessTokenInMemory: string | null = readFromStorage(ACCESS_STORAGE_KEY);
-
+// Tokens are read directly from storage on every access. This avoids stale
+// in-memory copies across tabs and keeps the refresh queue in client.ts
+// honest: it always sees the latest value that other tabs (or onAuthExpired
+// handlers) may have just cleared.
 export function getAccessToken(): string | null {
-  return accessTokenInMemory;
+  return readFromStorage(ACCESS_STORAGE_KEY);
 }
 
 export function setAccessToken(token: string | null): void {
-  accessTokenInMemory = token;
   writeToStorage(ACCESS_STORAGE_KEY, token);
 }
 
@@ -61,3 +59,10 @@ export function onAuthExpired(handler: () => void): () => void {
   window.addEventListener(AUTH_EXPIRED_EVENT, handler);
   return () => window.removeEventListener(AUTH_EXPIRED_EVENT, handler);
 }
+
+// Exported for tests so they can clear storage between runs without coupling
+// to the storage key constant.
+export const __TEST_ONLY__ = {
+  ACCESS_STORAGE_KEY,
+  REFRESH_STORAGE_KEY,
+};
