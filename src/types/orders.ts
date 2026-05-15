@@ -54,7 +54,20 @@ export interface OrderEvent {
 export interface Order {
   id: string;
   orderNumber: string;
-  userId: string;
+  /**
+   * Cliente de online checkout. Null para órdenes POS/WhatsApp donde
+   * `staffId` es quien registró la venta. El back garantiza XOR vía
+   * CHECK constraint (uno y solo uno está populado).
+   */
+  userId: string | null;
+  /** Staff que registró la venta (POS/WhatsApp). Null para online. */
+  staffId: string | null;
+  /**
+   * Nombre del staff resuelto por el back (join contra staff_members
+   * en los endpoints `/admin/orders`). Null para online o cuando
+   * staffId no se pudo resolver.
+   */
+  staffName: string | null;
   channel: OrderChannel;
   status: OrderStatus;
   paymentMethod: PaymentMethod;
