@@ -1,5 +1,6 @@
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, RefreshCw } from 'lucide-react';
 import { useNavigate, useParams } from '@tanstack/react-router';
+import { Button } from '@/components/ui/Button';
 import { ProductForm } from '@/features/products/components/ProductForm';
 import { useProduct } from '@/features/products/hooks/useProduct';
 
@@ -44,6 +45,19 @@ export function ProductEditPage() {
                 ? productQuery.error.message
                 : 'Error desconocido'}
             </p>
+            <div className="mt-4">
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() => void productQuery.refetch()}
+                disabled={productQuery.isFetching}
+              >
+                <RefreshCw size={14} />
+                <span>
+                  {productQuery.isFetching ? 'Reintentando…' : 'Reintentar'}
+                </span>
+              </Button>
+            </div>
           </div>
         ) : productQuery.data ? (
           <ProductForm

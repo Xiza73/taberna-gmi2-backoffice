@@ -6,6 +6,7 @@ import {
   Mail,
   Pencil,
   Phone,
+  RefreshCw,
   User,
 } from 'lucide-react';
 import { useNavigate, useParams } from '@tanstack/react-router';
@@ -93,6 +94,19 @@ export function CustomerDetailPage() {
                 ? customerQuery.error.message
                 : 'Error desconocido'}
             </p>
+            <div className="mt-4">
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() => void customerQuery.refetch()}
+                disabled={customerQuery.isFetching}
+              >
+                <RefreshCw size={14} />
+                <span>
+                  {customerQuery.isFetching ? 'Reintentando…' : 'Reintentar'}
+                </span>
+              </Button>
+            </div>
           </div>
         ) : customer && customerId ? (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">

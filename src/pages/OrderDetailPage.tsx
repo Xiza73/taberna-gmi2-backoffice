@@ -1,5 +1,6 @@
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, RefreshCw } from 'lucide-react';
 import { useNavigate, useParams } from '@tanstack/react-router';
+import { Button } from '@/components/ui/Button';
 import {
   channelBadgeClass,
   channelLabels,
@@ -95,6 +96,17 @@ export function OrderDetailPage() {
                 ? orderQuery.error.message
                 : 'Error desconocido'}
             </p>
+            <div className="mt-4">
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() => void orderQuery.refetch()}
+                disabled={orderQuery.isFetching}
+              >
+                <RefreshCw size={14} />
+                <span>{orderQuery.isFetching ? 'Reintentando…' : 'Reintentar'}</span>
+              </Button>
+            </div>
           </div>
         ) : orderQuery.data && orderId ? (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
