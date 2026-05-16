@@ -89,6 +89,13 @@ const menuSections: MenuSection[] = [
         path: '/cash-registers',
         allowRoles: ADMINS_ONLY,
       },
+      {
+        id: 'pos-reports',
+        label: 'Reportes POS',
+        icon: BarChart3,
+        path: '/pos-reports',
+        allowRoles: ADMINS_ONLY,
+      },
     ],
   },
   {
