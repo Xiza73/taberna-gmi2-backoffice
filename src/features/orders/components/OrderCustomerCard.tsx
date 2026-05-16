@@ -1,4 +1,4 @@
-import { FileText, Mail, MapPin, Phone, User } from 'lucide-react';
+import { FileText, Mail, MapPin, Phone, User, UserCog } from 'lucide-react';
 import type { Order } from '@/types/orders';
 import { customerDocTypeLabels } from '../lib/customerDocType';
 
@@ -25,7 +25,9 @@ export function OrderCustomerCard({ order }: Props) {
 
       <dl className="space-y-2 text-sm">
         <Row icon={<User size={14} />} value={order.customerName} />
-        <Row icon={<Mail size={14} />} value={order.customerEmail} />
+        {order.customerEmail && (
+          <Row icon={<Mail size={14} />} value={order.customerEmail} />
+        )}
         {order.customerPhone && (
           <Row icon={<Phone size={14} />} value={order.customerPhone} />
         )}
@@ -36,6 +38,21 @@ export function OrderCustomerCard({ order }: Props) {
           />
         )}
       </dl>
+
+      {order.staffName && (
+        <>
+          <hr className="border-border" />
+          <div className="space-y-1.5">
+            <p className="text-xs uppercase tracking-wide text-muted-foreground">
+              Vendido por
+            </p>
+            <div className="flex items-center gap-2 text-sm">
+              <UserCog size={14} className="shrink-0 text-muted-foreground" />
+              <span>{order.staffName}</span>
+            </div>
+          </div>
+        </>
+      )}
 
       {hasAddress && (
         <>

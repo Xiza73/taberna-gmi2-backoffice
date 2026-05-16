@@ -7,8 +7,10 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/Table';
+import { cn } from '@/utils/cn';
 import { formatDateTime, formatPEN } from '@/utils/format';
 import type { Order } from '@/types/orders';
+import { channelBadgeClass, channelLabels } from '../lib/channel';
 import { OrderStatusBadge } from './OrderStatusBadge';
 
 interface Props {
@@ -33,6 +35,7 @@ export function OrdersTable({ orders, onSelect }: Props) {
         <TableRow>
           <TableHead>Nº</TableHead>
           <TableHead>Fecha</TableHead>
+          <TableHead>Canal</TableHead>
           <TableHead>Cliente</TableHead>
           <TableHead>Estado</TableHead>
           <TableHead className="text-right">Total</TableHead>
@@ -51,11 +54,28 @@ export function OrdersTable({ orders, onSelect }: Props) {
               {formatDateTime(order.createdAt)}
             </TableCell>
             <TableCell>
+              <span
+                className={cn(
+                  'inline-flex items-center px-2 py-0.5 rounded-sm text-[11px] uppercase tracking-wide',
+                  channelBadgeClass[order.channel],
+                )}
+              >
+                {channelLabels[order.channel]}
+              </span>
+            </TableCell>
+            <TableCell>
               <div className="flex flex-col">
                 <span>{order.customerName}</span>
-                <span className="text-xs text-muted-foreground truncate max-w-[200px]">
-                  {order.customerEmail}
-                </span>
+                {order.customerEmail && (
+                  <span className="text-xs text-muted-foreground truncate max-w-[200px]">
+                    {order.customerEmail}
+                  </span>
+                )}
+                {order.staffName && (
+                  <span className="text-xs text-muted-foreground/80 truncate max-w-[200px]">
+                    Vendió: {order.staffName}
+                  </span>
+                )}
               </div>
             </TableCell>
             <TableCell>
