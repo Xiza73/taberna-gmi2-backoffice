@@ -4,10 +4,12 @@ import {
   useQuery,
   useQueryClient,
 } from '@tanstack/react-query';
+import { staffAuthApi } from '@/api/staffAuthApi';
 import { staffInvitationsApi } from '@/api/staffInvitationsApi';
 import type {
   AcceptInvitationInput,
   InviteStaffInput,
+  RegisterStaffInput,
   StaffInvitationListQuery,
 } from '@/types/staff';
 
@@ -63,5 +65,11 @@ export function useAcceptInvitation(token: string) {
   return useMutation({
     mutationFn: (input: AcceptInvitationInput) =>
       staffInvitationsApi.accept(token, input),
+  });
+}
+
+export function useRegisterStaff() {
+  return useMutation({
+    mutationFn: (input: RegisterStaffInput) => staffAuthApi.register(input),
   });
 }

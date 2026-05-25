@@ -55,3 +55,10 @@ export interface AcceptInvitationInput {
   name: string;
   password: string;
 }
+
+export interface RegisterStaffInput {
+  name: string;
+  email: string;
+  password: string;
+  invitationToken?: string;
+}

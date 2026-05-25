@@ -11,6 +11,7 @@ export {
   useRevokeInvitation,
   useValidateInvitation,
   useAcceptInvitation,
+  useRegisterStaff,
   staffInvitationKeys,
 } from './hooks/useStaffInvitations';
 export { StaffTable } from './components/StaffTable';
