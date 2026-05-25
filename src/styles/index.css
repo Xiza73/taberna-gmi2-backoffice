@@ -4,3 +4,10 @@
 @import 'tw-animate-css';
 @import './fonts.css';
 @import './theme.css';
+
+/* Oculta el botón nativo de revelar password en Edge/IE para no
+   superponerlo con el toggle propio del componente Input. */
+input::-ms-reveal,
+input::-ms-clear {
+  display: none;
+}
