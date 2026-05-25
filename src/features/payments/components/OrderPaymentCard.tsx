@@ -108,7 +108,7 @@ export function OrderPaymentCard({ orderId, paymentMethod }: Props) {
             <div className="flex items-start gap-2 text-xs text-muted-foreground bg-muted/40 rounded p-2">
               <Info size={12} className="mt-0.5 shrink-0" />
               <span>
-                Pago manual. Verificá el comprobante y marcá la orden como
+                Pago manual. Verifica el comprobante y marca la orden como
                 pagada desde "Cambiar estado".
               </span>
             </div>

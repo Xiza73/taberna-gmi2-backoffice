@@ -64,7 +64,7 @@ export function StaffTable({
                   <span className="font-medium">{member.name}</span>
                   {isSelf && (
                     <span className="text-[10px] uppercase tracking-wide px-1.5 py-0.5 rounded bg-muted text-muted-foreground">
-                      Vos
+                      Tú
                     </span>
                   )}
                 </div>

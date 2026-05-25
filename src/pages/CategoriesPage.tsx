@@ -79,7 +79,7 @@ export function CategoriesPage() {
           <div>
             <h2 className="text-2xl lg:text-3xl mb-1">Categorías</h2>
             <p className="text-sm text-muted-foreground">
-              Organizá tu catálogo en categorías y subcategorías.
+              Organiza tu catálogo en categorías y subcategorías.
             </p>
           </div>
           <Button onClick={openCreate}>
@@ -153,7 +153,7 @@ export function CategoriesPage() {
         title="Eliminar categoría"
         message={
           deleting
-            ? `¿Seguro que querés eliminar "${deleting.name}"? El back rechazará si tiene productos o subcategorías asociadas.`
+            ? `¿Seguro que quieres eliminar "${deleting.name}"? El back rechazará si tiene productos o subcategorías asociadas.`
             : ''
         }
       />

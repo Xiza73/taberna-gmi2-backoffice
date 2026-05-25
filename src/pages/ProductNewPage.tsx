@@ -24,7 +24,7 @@ export function ProductNewPage() {
           <div>
             <h2 className="text-2xl lg:text-3xl mb-1">Nuevo producto</h2>
             <p className="text-sm text-muted-foreground">
-              Completá los datos para agregar un producto al catálogo.
+              Completa los datos para agregar un producto al catálogo.
             </p>
           </div>
         </div>

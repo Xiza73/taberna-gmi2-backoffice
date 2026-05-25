@@ -102,7 +102,7 @@ function InvitationRegister({ token }: { token: string }) {
       <BrandHeader />
 
       <div className="rounded-2xl border border-border bg-card p-8 shadow-xl">
-        <h2 className="text-xl mb-1">Completá tu registro</h2>
+        <h2 className="text-xl mb-1">Completa tu registro</h2>
         <p className="text-sm text-muted-foreground mb-4">
           Te invitó <span className="text-foreground">{invitedByName}</span>.
         </p>
@@ -314,7 +314,7 @@ function renderInvalid(message: string) {
       <div className="rounded-2xl border border-destructive/30 bg-destructive/5 p-6">
         <p className="text-sm text-destructive">{message}</p>
         <p className="text-xs text-muted-foreground mt-2">
-          Pedile al admin que te envíe una nueva invitación.
+          Pídele al admin que te envíe una nueva invitación.
         </p>
       </div>
     </div>

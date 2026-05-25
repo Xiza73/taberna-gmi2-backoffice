@@ -40,7 +40,7 @@ export class ErrorBoundary extends Component<Props, State> {
           <div className="space-y-1">
             <h1 className="text-lg">Algo salió mal</h1>
             <p className="text-sm text-muted-foreground">
-              Ocurrió un error inesperado. Recargá la página para continuar.
+              Ocurrió un error inesperado. Recarga la página para continuar.
             </p>
             {this.state.error && (
               <p className="text-xs text-muted-foreground/70 mt-2 font-mono">

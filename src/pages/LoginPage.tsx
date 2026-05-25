@@ -44,7 +44,7 @@ export function LoginPage() {
     } catch (err) {
       const message = err instanceof ApiError ? err.message : 'No se pudo iniciar sesión';
       if (err instanceof ApiError && err.code === 'RATE_LIMITED') {
-        toast.error('Demasiados intentos. Esperá un minuto.');
+        toast.error('Demasiados intentos. Espera un minuto.');
         return;
       }
       toast.error(message);
@@ -64,9 +64,9 @@ export function LoginPage() {
         </div>
 
         <div className="rounded-2xl border border-border bg-card p-8 shadow-xl">
-          <h2 className="text-xl mb-1">Iniciá sesión</h2>
+          <h2 className="text-xl mb-1">Inicia sesión</h2>
           <p className="text-sm text-muted-foreground mb-6">
-            Accedé con tu cuenta de staff.
+            Accede con tu cuenta de staff.
           </p>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
@@ -114,7 +114,7 @@ export function LoginPage() {
         </div>
 
         <p className="text-center text-xs text-muted-foreground mt-6">
-          ¿Olvidaste tu contraseña? Pedile a un super admin que te envíe un reset.
+          ¿Olvidaste tu contraseña? Pídele a un super admin que te envíe un reset.
         </p>
       </div>
     </div>
