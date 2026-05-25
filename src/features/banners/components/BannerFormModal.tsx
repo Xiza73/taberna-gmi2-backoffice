@@ -91,7 +91,7 @@ export function BannerFormModal({ isOpen, onClose, banner }: Props) {
 
   const onSubmit = async (values: FormValues) => {
     if (values.imageUrl.trim() === '') {
-      toast.error('Subí una imagen para el banner');
+      toast.error('Sube una imagen para el banner');
       return;
     }
     if (

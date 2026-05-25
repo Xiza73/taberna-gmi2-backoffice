@@ -65,8 +65,8 @@ export function StaffEditModal({ isOpen, onClose, staff }: Props) {
         />
 
         <p className="text-xs text-muted-foreground">
-          Email y rol se modifican desde acciones dedicadas. Invitá un nuevo staff
-          si necesitás registrar a otra persona.
+          Email y rol se modifican desde acciones dedicadas. Invita un nuevo staff
+          si necesitas registrar a otra persona.
         </p>
 
         <div className="flex gap-3 pt-2 border-t border-border">

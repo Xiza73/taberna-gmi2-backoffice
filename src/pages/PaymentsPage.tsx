@@ -66,7 +66,7 @@ export function PaymentsPage() {
         <div className="p-4 pl-16 lg:pl-6 lg:p-6">
           <h2 className="text-2xl lg:text-3xl mb-1">Pagos</h2>
           <p className="text-sm text-muted-foreground">
-            Historial de pagos por pedido. Filtrá por método o estado.
+            Historial de pagos por pedido. Filtra por método o estado.
           </p>
         </div>
       </div>

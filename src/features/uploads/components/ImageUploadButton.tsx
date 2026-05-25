@@ -44,7 +44,7 @@ export function ImageUploadButton({
     if (!file) return;
 
     if (!ACCEPTED_IMAGE_MIME_TYPES.includes(file.type as never)) {
-      toast.error('Formato no permitido. Usá JPG, PNG o WEBP.');
+      toast.error('Formato no permitido. Usa JPG, PNG o WEBP.');
       return;
     }
 

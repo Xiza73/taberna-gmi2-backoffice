@@ -109,7 +109,7 @@ export function ProductForm({ mode, product, onSuccess, onCancel }: Props) {
     }
 
     if (values.images.length === 0) {
-      toast.error('Subí al menos una imagen del producto');
+      toast.error('Sube al menos una imagen del producto');
       return;
     }
 

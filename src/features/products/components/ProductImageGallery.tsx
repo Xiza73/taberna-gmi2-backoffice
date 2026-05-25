@@ -83,7 +83,7 @@ export function ProductImageGallery({ value, onChange, disabled = false }: Props
         />
         {value.length > 0 && (
           <p className="text-xs text-muted-foreground">
-            La primera imagen se muestra como principal. Arrastrá para reordenar.
+            La primera imagen se muestra como principal. Arrastra para reordenar.
           </p>
         )}
       </div>
