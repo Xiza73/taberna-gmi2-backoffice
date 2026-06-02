@@ -19,6 +19,7 @@ import {
   useUpdateProduct,
 } from '../hooks/useProductMutations';
 import { ProductImageGallery } from './ProductImageGallery';
+import { SynonymsInput } from './SynonymsInput';
 
 interface Props {
   mode: 'create' | 'edit';
@@ -38,6 +39,7 @@ interface FormValues {
   categoryId: string;
   isActive: boolean;
   images: string[];
+  synonyms: string[];
 }
 
 const slugPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -54,6 +56,7 @@ function buildDefaults(product?: Product): FormValues {
     categoryId: product?.categoryId ?? '',
     isActive: product?.isActive ?? true,
     images: product?.images ?? [],
+    synonyms: product?.synonyms ?? [],
   };
 }
 
@@ -89,6 +92,7 @@ export function ProductForm({ mode, product, onSuccess, onCancel }: Props) {
   }, [nameValue, slugTouched, setValue]);
 
   const images = watch('images');
+  const synonyms = watch('synonyms');
 
   const onSubmit = async (values: FormValues) => {
     const priceCents = solesStringToCents(values.priceSoles);
@@ -124,6 +128,7 @@ export function ProductForm({ mode, product, onSuccess, onCancel }: Props) {
           sku: values.sku.trim() === '' ? null : values.sku.trim(),
           stock: Number(values.stock),
           images: values.images,
+          synonyms: values.synonyms,
           categoryId: values.categoryId,
           isActive: values.isActive,
         };
@@ -143,6 +148,7 @@ export function ProductForm({ mode, product, onSuccess, onCancel }: Props) {
           ...(values.sku.trim() !== '' && { sku: values.sku.trim() }),
           stock: Number(values.stock),
           images: values.images,
+          ...(values.synonyms.length > 0 && { synonyms: values.synonyms }),
           categoryId: values.categoryId,
           isActive: values.isActive,
         };
@@ -285,6 +291,17 @@ export function ProductForm({ mode, product, onSuccess, onCancel }: Props) {
         <ProductImageGallery
           value={images}
           onChange={(next) => setValue('images', next, { shouldValidate: false })}
+          disabled={isPending}
+        />
+      </section>
+
+      <section className="bg-card border border-border rounded-lg p-4 lg:p-6 space-y-4">
+        <h3 className="text-sm text-muted-foreground">
+          Sinónimos y palabras relacionadas — opcional
+        </h3>
+        <SynonymsInput
+          value={synonyms}
+          onChange={(next) => setValue('synonyms', next, { shouldValidate: false })}
           disabled={isPending}
         />
       </section>

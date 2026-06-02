@@ -10,6 +10,7 @@ export interface Product {
   sku: string | null;
   stock: number;
   images: string[];
+  synonyms: string[];
   categoryId: string;
   isActive: boolean;
   averageRating: number | null;
@@ -38,6 +39,7 @@ export interface CreateProductInput {
   sku?: string | null;
   stock?: number;
   images?: string[];
+  synonyms?: string[];
   categoryId: string;
   isActive?: boolean;
 }
