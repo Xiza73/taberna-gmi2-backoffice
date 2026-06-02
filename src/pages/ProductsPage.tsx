@@ -170,7 +170,7 @@ export function ProductsPage() {
         title="Eliminar producto"
         message={
           deleting
-            ? `¿Seguro que querés eliminar "${deleting.name}"? El producto se desactivará y se quitará de carritos y wishlists de clientes.`
+            ? `¿Seguro que quieres eliminar "${deleting.name}"? El producto se desactivará y se quitará de carritos y wishlists de clientes.`
             : ''
         }
       />

@@ -15,6 +15,43 @@ Panel de administración para **staff** del ecommerce. Consume endpoints `/staff
 
 ---
 
+## Convención: copy en español neutro
+
+**TODO el copy visible al usuario** va en **español neutro** (forma "tú"),
+NO en voseo rioplatense. Aplica a:
+
+- Labels de UI, títulos, descripciones, placeholders, hints
+- Toast messages (sonner)
+- Error messages y validaciones
+- ARIA labels y title attributes
+- También comentarios de código y JSDoc (para consistencia)
+
+**Por qué**: el negocio puede vender en cualquier país hispanohablante.
+El voseo se entiende solo en Río de la Plata + algunas regiones. El
+neutro funciona en LATAM + España.
+
+### Patrones a EVITAR / equivalentes
+
+| Voseo (NO usar) | Neutro (usar) |
+|---|---|
+| tenés, tené | tienes, ten |
+| ingresá, agregá, contá | ingresa, agrega, cuenta |
+| iniciá, usá, andá | inicia, usa, ve |
+| podés, dudás | puedes, dudas |
+| cerrá, abrí | cierra, abre |
+| confirmá, seleccioná | confirma, selecciona |
+| intentá, revisá, probá | intenta, revisa, prueba |
+| mirá, decí, hacé | mira, di, haz |
+| reintentá, terminá, seguí | reintenta, termina, sigue |
+| fijate (sin tilde) | fíjate (con tilde) |
+| vos (pronombre) | tú |
+
+Si una nueva PR introduce voseo, **rechazar en review** y pedir cambio.
+
+(Lista completa de reemplazos en el commit `chore(i18n): neutralize Spanish copy` cuando se hizo el sweep inicial.)
+
+---
+
 ## Scope MVP
 
 - Login / logout (staff auth con refresh rotation)

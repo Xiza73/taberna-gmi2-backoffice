@@ -45,7 +45,7 @@ export function SalesReportSection() {
 
       {!isValid ? (
         <div className="rounded-lg border border-amber-500/30 bg-amber-500/5 p-4 text-sm text-amber-200">
-          El rango de fechas es inválido. Asegurate que la fecha desde sea menor o
+          El rango de fechas es inválido. Asegúrate que la fecha desde sea menor o
           igual a la fecha hasta.
         </div>
       ) : isError ? (

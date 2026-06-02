@@ -57,7 +57,7 @@ export function UsersPage() {
   const inviterLookup = useMemo(() => {
     const map = new Map<string, string>();
     for (const member of allStaffQuery.data?.items ?? []) {
-      map.set(member.id, member.id === me?.id ? 'Vos' : member.name);
+      map.set(member.id, member.id === me?.id ? 'Tú' : member.name);
     }
     return map;
   }, [allStaffQuery.data, me?.id]);

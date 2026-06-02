@@ -46,7 +46,7 @@ export function ChangePasswordForm() {
       // Back revokes all refresh tokens — we clear and force re-login.
       clearTokens();
       qc.clear();
-      toast.success('Contraseña cambiada. Volvé a iniciar sesión.');
+      toast.success('Contraseña cambiada. Vuelve a iniciar sesión.');
       void navigate({ to: '/login', search: { redirect: undefined } });
     } catch (err) {
       const message = err instanceof ApiError ? err.message : 'No se pudo cambiar la contraseña';
@@ -109,7 +109,7 @@ export function ChangePasswordForm() {
           error={errors.confirmPassword?.message}
           className="pl-9"
           {...register('confirmPassword', {
-            required: 'Confirmá la nueva contraseña',
+            required: 'Confirma la nueva contraseña',
             validate: (v) => v === newPasswordValue || 'No coincide con la nueva',
           })}
         />

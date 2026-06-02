@@ -76,7 +76,7 @@ export function ShippingPage() {
         <div className="p-4 pl-16 lg:pl-6 lg:p-6">
           <h2 className="text-2xl lg:text-3xl mb-1">Envíos</h2>
           <p className="text-sm text-muted-foreground">
-            Pedidos pagados que requieren envío. Hacé click para registrar
+            Pedidos pagados que requieren envío. Haz click para registrar
             tracking.
           </p>
         </div>
