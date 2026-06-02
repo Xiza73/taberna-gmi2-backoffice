@@ -33,3 +33,6 @@ test-results/
 CLAUDE.local.md
 .claude/settings.local.json
 .claude/ui-design/
+
+# TypeScript incremental build cache
+*.tsbuildinfo
